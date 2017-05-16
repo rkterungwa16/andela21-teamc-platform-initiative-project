@@ -1,0 +1,12 @@
+.img-circle {
+  max-height: 10em;
+  margin: 0 auto;
+}
+.news-feed{
+  border: 1px solid blue;
+}
+
+.news-feed .row {
+  margin-bottom: 20px;
+  box-shadow: 0 5px 10px 0, 0 11px 21px 0;
+}
