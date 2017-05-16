@@ -56,5 +56,8 @@
     "supertest": "^3.0.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
 }
