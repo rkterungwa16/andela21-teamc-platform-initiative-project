@@ -131,7 +131,23 @@ app.delete('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
 });
 
 
+// =================
+// VOTES
+// =================
 
+app.get('/upvote', (req, res) => {
+  if (req.session.user) {
+    const id = parseInt(req.query.id);
+    const query = { id: id };
+    const username = req.session.user.username;
+
+    User.findOne(query, (err, user) => {
+      const myVote = new myApp(user);
+      myVote.upvote(username);
+      res.json(user);
+    })
+  }
+})
 
 app.listen(3000, () => {
   console.log('serving on port 3000');
