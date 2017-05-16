@@ -1,0 +1,31 @@
+body {
+  background-color: mintcream;
+}
+.img-brand {
+  position: relative;
+  width: 25%;
+}
+.navbar {
+  height: 7em;
+  background-color: #3258DE;
+  padding: 0 2em;
+}
+
+.btn-login {
+  margin-top: 2em;
+}
+
+.nav.navbar-nav.navbar-right li a {
+    color: white;
+}
+
+@media (max-width: 767px){
+  .navbar-collapse {
+    background-color: rgba(50,88,222,0.5);
+  }
+}
+
+.form-container {
+  background-color:#AEECEF;
+  padding: 2em;
+}
