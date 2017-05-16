@@ -1,84 +1,89 @@
-import express from 'express';
-import path from 'path';
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
-// import expressValidator from 'express -validator';
-import flash from 'connect-flash';
-import session from 'express-session';
-import passport from 'passport';
-// import localStrategy from 'passport-local';
-import mongoose from 'mongoose';
-import users from '../dist/users';
-// import index from '../dist/index';
-
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1/userDetails');
-const db = mongoose.connection;
+const express = require( 'express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 
-// Init App
 const app = express();
-
-
-
-// Static files
-app.use(express.static(path.join(process.cwd(), 'public')));
-
-// BodyParser Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-// Set View engine
-
-// app.set('views', path.join(__dirname, 'views'));
+// APP CONFIG
+mongoose.connect('mongodb://localhost/andelainitiative');
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// MONGOOSE/MODEL CONFIG
+const initiativeSchema = new mongoose.Schema({
+  title: String,
+  image: { type: String, default: 'http://leadersinheels.com/wp-content/uploads/facebook-default.jpg' },
+  body: String,
+  created: { type: Date, default: Date.now }
+});
+const Initiatives = mongoose.model('Initiatives', initiativeSchema);
+
+/*Initiatives.create({
+  title: 'MONGO LABS',
+  image: '',
+  body: 'MY name is mcdavid emereuwa hfd8befrh   dwbfywiwuf '
+});*/
 
 
-
-// express session
-app.use(session({
-  secret: 'secret',
-  saveUninitialized: true,
-  resave: true
-}));
-
-// Passport Init
-app.use(passport.initialize());
-app.use(passport.session());
-
-// express validator
-/* app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
-
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
+// INDEX ROUTES
+app.get('/', (req, res) => {
+  res.redirect('/andelainitiative');
+});
+app.get('/andelainitiative', (req, res) => {
+  Initiatives.find({}, (err, andelainitiative) => {
+    if (err) {
+      console.log('ERROR');
+    } else {
+      return res.render('index', { andelainitiative });
     }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
-}));*/
-
-// Connect flash
-app.use(flash());
-
-// Global vars
-app.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
+  });
+});
+// New Route
+app.get('/andelainitiative/new', (req, res) => {
+  res.render('new');
 });
 
-// app.use('/', index);
-app.use('/', users);
+// Create route
 
-app.set('port', (process.env.PORT || 3000));
+app.post('/andelainitiative', (req, res) => {
+  Initiatives.create(req.body.andelainitiative, (err, newInitiatives) => {
+    if (err) {
+      res.render('new');
+    } else {
+      return res.redirect('/andelainitiative');
+    }
+  })
+})
 
-app.listen(app.get('port'));
+// Show Item route
+
+app.get('/andelainitiative/:id', (req, res) => {
+  Initiatives.findById(req.params.id, (err, foundInitiatives) => {
+    if (err) {
+      res.redirect('/andelainitiative');
+    } else {
+      res.render('show', { initiative: foundInitiatives });
+    }
+  });
+});
+
+// Edit route
+app.get('/andelainitiative/:id/edit', (req, res) => {
+  Initiatives.findById(req.params.id, (err, foundInitiatives) => {
+    if (err) {
+      res.redirect('/andelainitiatives');
+    } else {
+      res.render('edit', { initiative: foundInitiatives });
+    }
+  });
+});
+
+// Update Route
+app.put('/andelainitiative/:id', (req, res) => {
+  
+})
+app.listen(process.env.PORT || 8080, process.env.IP, () => {
+  console.log('server is running');
+});
+
