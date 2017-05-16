@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -24,12 +28,17 @@ var LocalStrategy = _passportLocal2.default.Strategy;
 
 // Register
 router.get('/register', function (req, res) {
-  // res.render('register');
+  res.render('signup');
+});
+
+// Home
+router.get('/', function (req, res) {
+  res.render('index');
 });
 
 // Login
 router.get('/login', function (req, res) {
-  //  res.render('login');
+  res.render('login');
 });
 
 // Register User
@@ -39,10 +48,6 @@ router.post('/register', function (req, res) {
       email = req.body.email,
       password = req.body.password,
       password2 = req.body.password2;
-
-  console.log(name);
-  console.log(password2);
-  console.log(password);
 
   // Validation
   /* req.checkBody('name', 'Name is required').notEmpty();
@@ -56,6 +61,11 @@ router.post('/register', function (req, res) {
     res.render('register', { errors
     });
   } else {*/
+  req.checkBody('password2', 'Password do not match').equals(req.body.password);
+  /* const errors = req.validationErrors();
+  if (errors) {
+    console.log('Error Occurred');
+  }*/
   var newUser = new _user2.default({
     name: name,
     email: email,
@@ -68,25 +78,8 @@ router.post('/register', function (req, res) {
     console.log(user);
   });
   // req.flash('success_msg', 'You are registered and can now login');
-  // res.redirect('/users/login');
+  res.redirect('/login');
 });
-
-_passport2.default.use(new LocalStrategy(function (username, password, done) {
-  _user2.default.getUserByUsername(username, function (err, user) {
-    if (err) throw err;
-    if (!user) {
-      return done(null, false, { message: 'Unknown User' });
-    }
-  });
-
-  _user2.default.comparePassword(password, _user2.default.password, function (err, isMatch) {
-    if (err) throw err;
-    if (isMatch) {
-      return done(null, user);
-    }
-    return done(null, false, { message: 'Invalid password' });
-  });
-}));
 
 _passport2.default.serializeUser(function (user, done) {
   done(null, user.id);
@@ -98,6 +91,24 @@ _passport2.default.deserializeUser(function (id, done) {
   });
 });
 
-router.post('/login', _passport2.default.authenticate('local', { successRedirect: '/', failureRedirect: '/users/login', failureFlash: true }), function (req, res) {});
+_passport2.default.use(new LocalStrategy(function (username, password, done) {
+  _user2.default.getUserByUsername(username, function (err, user) {
+    if (err) throw err;
+    if (!user) {
+      return done(null, false, { message: 'Unknown User' });
+    }
+    _user2.default.comparePassword(password, user.password, function (err, isMatch) {
+      if (err) throw err;
+      if (isMatch) {
+        return done(null, user);
+      }
+      return done(null, false, { message: 'Invalid password' });
+    });
+  });
+}));
 
-module.exports = router;
+router.post('/login', _passport2.default.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }), function (req, res) {
+  res.redirect('/');
+});
+
+exports.default = router;

@@ -9,6 +9,7 @@ import passport from 'passport';
 // import localStrategy from 'passport-local';
 import mongoose from 'mongoose';
 import users from '../dist/users';
+// import index from '../dist/index';
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1/userDetails');
@@ -18,18 +19,22 @@ const db = mongoose.connection;
 // Init App
 const app = express();
 
-// Set View engine
 
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
+
+// Static files
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 // BodyParser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Static files
-// app.use(express.static(path.join(__dirname, 'public')));
+// Set View engine
+
+// app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+
 
 // express session
 app.use(session({
@@ -71,7 +76,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/users', users);
+// app.use('/', index);
+app.use('/', users);
 
 app.set('port', (process.env.PORT || 3000));
 

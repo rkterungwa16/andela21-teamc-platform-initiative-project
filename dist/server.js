@@ -38,6 +38,8 @@ var _users2 = _interopRequireDefault(_users);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import index from '../dist/index';
+
 // import localStrategy from 'passport-local';
 _mongoose2.default.Promise = global.Promise;
 // import expressValidator from 'express -validator';
@@ -48,18 +50,18 @@ var db = _mongoose2.default.connection;
 // Init App
 var app = (0, _express2.default)();
 
-// Set View engine
-
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
+// Static files
+app.use(_express2.default.static(_path2.default.join(process.cwd(), 'public')));
 
 // BodyParser Middleware
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use((0, _cookieParser2.default)());
 
-// Static files
-// app.use(express.static(path.join(__dirname, 'public')));
+// Set View engine
+
+// app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // express session
 app.use((0, _expressSession2.default)({
@@ -101,7 +103,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/users', _users2.default);
+// app.use('/', index);
+app.use('/', _users2.default);
 
 app.set('port', process.env.PORT || 3000);
 

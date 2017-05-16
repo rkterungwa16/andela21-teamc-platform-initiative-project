@@ -9,12 +9,17 @@ const LocalStrategy = localStrategy.Strategy;
 
 // Register
 router.get('/register', (req, res) => {
-  // res.render('register');
+  res.render('signup');
+});
+
+// Home
+router.get('/', (req, res) => {
+  res.render('index');
 });
 
 // Login
 router.get('/login', (req, res) => {
- //  res.render('login');
+  res.render('login');
 });
 
 // Register User
@@ -24,10 +29,6 @@ router.post('/register', (req, res) => {
     email = req.body.email,
     password = req.body.password,
     password2 = req.body.password2;
-
-  console.log(name);
-  console.log(password2);
-  console.log(password);
 
 // Validation
   /* req.checkBody('name', 'Name is required').notEmpty();
@@ -41,6 +42,11 @@ router.post('/register', (req, res) => {
     res.render('register', { errors
     });
   } else {*/
+  req.checkBody('password2', 'Password do not match').equals(req.body.password);
+  /* const errors = req.validationErrors();
+  if (errors) {
+    console.log('Error Occurred');
+  }*/
   const newUser = new User({
     name,
     email,
@@ -53,7 +59,7 @@ router.post('/register', (req, res) => {
     console.log(user);
   });
   // req.flash('success_msg', 'You are registered and can now login');
-  // res.redirect('/users/login');
+  res.redirect('/login');
 });
 
 passport.serializeUser((user, done) => {
@@ -78,16 +84,16 @@ passport.use(new LocalStrategy(
         if (isMatch) {
           return done(null, user);
         }
-        return done(null, false, {message: 'Invalid password'});
+        return done(null, false, { message: 'Invalid password' });
       });
     });
   }));
 
+
 router.post('/login',
-  passport.authenticate('local', { successRedirect: '/', failureRedirect: '/users/login', failureFlash: true }),
+  passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }),
   (req, res) => {
     res.redirect('/');
   });
 
-
-module.exports = router;
+export default router;
