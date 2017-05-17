@@ -1,6 +1,7 @@
-const express = require( 'express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import methodOverride from 'method-override';
 
 
 const app = express();
@@ -9,9 +10,18 @@ mongoose.connect('mongodb://localhost/andelainitiative');
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
-// MONGOOSE/MODEL CONFIG
+// USER MONGOOSE CONFIG
+const UserSchema = new mongoose.Schema({
+  username: String,
+  password: String
+});
+const Users = mongoose.model('Users', UserSchema);
+
+// INITIATIVES MONGOOSE/MODEL CONFIG
 const initiativeSchema = new mongoose.Schema({
+  Author: String,
   title: String,
   image: { type: String, default: 'http://leadersinheels.com/wp-content/uploads/facebook-default.jpg' },
   body: String,
@@ -19,16 +29,9 @@ const initiativeSchema = new mongoose.Schema({
 });
 const Initiatives = mongoose.model('Initiatives', initiativeSchema);
 
-/*Initiatives.create({
-  title: 'MONGO LABS',
-  image: '',
-  body: 'MY name is mcdavid emereuwa hfd8befrh   dwbfywiwuf '
-});*/
-
-
 // INDEX ROUTES
 app.get('/', (req, res) => {
-  res.redirect('/andelainitiative');
+  res.redirect('/andelainitiative/login');
 });
 app.get('/andelainitiative', (req, res) => {
   Initiatives.find({}, (err, andelainitiative) => {
@@ -39,6 +42,31 @@ app.get('/andelainitiative', (req, res) => {
     }
   });
 });
+
+// User Login Page
+app.get('/andelainitiative/login', (req, res) => {
+  Users.create(req.body.user, (err, foundUsers) => {
+    if (err) {
+      res.render('login');
+    } else {
+      res.render('login', { user: foundUsers });
+    }
+  });
+});
+
+// User Dashboard page ROUTE
+
+app.get('/andelainitiatives/:id', (req, res) => {
+  Users.findById(req.params.id, (err, user) => {
+    if (err) {
+      res.redirect('login');
+    } else {
+      res.render('dashboard', { user });
+    }
+  });
+});
+
+
 // New Route
 app.get('/andelainitiative/new', (req, res) => {
   res.render('new');
@@ -53,8 +81,8 @@ app.post('/andelainitiative', (req, res) => {
     } else {
       return res.redirect('/andelainitiative');
     }
-  })
-})
+  });
+});
 
 // Show Item route
 
@@ -81,8 +109,27 @@ app.get('/andelainitiative/:id/edit', (req, res) => {
 
 // Update Route
 app.put('/andelainitiative/:id', (req, res) => {
-  
-})
+  Initiatives.findByIdAndUpdate(req.params.id, req.body
+  .andelainitiative, (err, updatedInitiative) => {
+    if (err) {
+      res.redirect('/andelainitiative');
+    } else {
+      res.redirect('/andelainitiative/' + req.params.id);
+    }
+  });
+});
+
+// Delete Route
+app.delete('/andelainitiative/:id', (req, res) => {
+  Initiatives.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      res.redirect('/andelainitiative');
+    } else {
+      res.redirect('/andelainitiative');
+    }
+  });
+});
+
 app.listen(process.env.PORT || 8080, process.env.IP, () => {
   console.log('server is running');
 });
