@@ -2,24 +2,22 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import mongodb from 'mongodb';
 // import expressValidator from 'express -validator';
 import flash from 'connect-flash';
-import session from 'express-session';
 import passport from 'passport';
+import session from 'express-session';
 // import localStrategy from 'passport-local';
 import mongoose from 'mongoose';
 import users from '../dist/users';
 // import index from '../dist/index';
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1/userDetails');
+mongoose.connect('mongodb://crowdsource:terunkom1986@ds143221.mlab.com:43221/crowdsource');
 const db = mongoose.connection;
-
 
 // Init App
 const app = express();
-
-
 
 // Static files
 app.use(express.static(path.join(process.cwd(), 'public')));

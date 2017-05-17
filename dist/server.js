@@ -16,17 +16,21 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _mongodb = require('mongodb');
+
+var _mongodb2 = _interopRequireDefault(_mongodb);
+
 var _connectFlash = require('connect-flash');
 
 var _connectFlash2 = _interopRequireDefault(_connectFlash);
 
-var _expressSession = require('express-session');
-
-var _expressSession2 = _interopRequireDefault(_expressSession);
-
 var _passport = require('passport');
 
 var _passport2 = _interopRequireDefault(_passport);
+
+var _expressSession = require('express-session');
+
+var _expressSession2 = _interopRequireDefault(_expressSession);
 
 var _mongoose = require('mongoose');
 
@@ -44,7 +48,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _mongoose2.default.Promise = global.Promise;
 // import expressValidator from 'express -validator';
 
-_mongoose2.default.connect('mongodb://127.0.0.1/userDetails');
+_mongoose2.default.connect('mongodb://crowdsource:terunkom1986@ds143221.mlab.com:43221/crowdsource');
 var db = _mongoose2.default.connection;
 
 // Init App
