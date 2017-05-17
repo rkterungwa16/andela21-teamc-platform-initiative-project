@@ -34,10 +34,12 @@ app.get('/', (req, res) => {
   res.redirect('/login');
 });
 app.get('/andelainitiative', (req, res) => {
+  console.log(req.body)
   Initiatives.find({}, (err, initiatives) => {
     if (err) {
       console.log('ERROR');
     } else {
+      console.log(initiatives);
       return res.render('index', { initiatives });
     }
   });
@@ -75,7 +77,7 @@ app.get('/andelainitiative/new', (req, res) => {
 // Create route
 
 app.post('/andelainitiative', (req, res) => {
-  Initiatives.create(req.body.andelainitiative, (err, newInitiatives) => {
+  Initiatives.create(req.body.initiatives, (err, newInitiatives) => {
     if (err) {
       res.render('new');
     } else {
