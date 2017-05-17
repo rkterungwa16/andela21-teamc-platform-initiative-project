@@ -1,6 +1,7 @@
-const express = require( 'express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import methodOverride from 'method-override';
 
 
 const app = express();
@@ -9,6 +10,7 @@ mongoose.connect('mongodb://localhost/andelainitiative');
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'))
 
 // MONGOOSE/MODEL CONFIG
 const initiativeSchema = new mongoose.Schema({
@@ -18,13 +20,6 @@ const initiativeSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now }
 });
 const Initiatives = mongoose.model('Initiatives', initiativeSchema);
-
-/*Initiatives.create({
-  title: 'MONGO LABS',
-  image: '',
-  body: 'MY name is mcdavid emereuwa hfd8befrh   dwbfywiwuf '
-});*/
-
 
 // INDEX ROUTES
 app.get('/', (req, res) => {
@@ -53,8 +48,8 @@ app.post('/andelainitiative', (req, res) => {
     } else {
       return res.redirect('/andelainitiative');
     }
-  })
-})
+  });
+});
 
 // Show Item route
 
@@ -81,8 +76,26 @@ app.get('/andelainitiative/:id/edit', (req, res) => {
 
 // Update Route
 app.put('/andelainitiative/:id', (req, res) => {
-  
-})
+  Initiatives.findByIdAndUpdate(req.params.id, req.body
+  .andelainitiative, (err, updatedInitiative) => {
+    if (err) {
+      res.redirect('/andelainitiative');
+    } else {
+      res.redirect('/andelainitiative/' + req.params.id);
+    }
+  });
+});
+
+// Delete Route
+app.delete('/andelainitiative/:id', (req, res) => {
+  Initiatives.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      res.redirect('/andelainitiative');
+    } else {
+      res.redirect('/andelainitiative');
+    }
+  });
+});
 app.listen(process.env.PORT || 8080, process.env.IP, () => {
   console.log('server is running');
 });
