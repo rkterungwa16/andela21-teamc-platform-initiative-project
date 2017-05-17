@@ -25,9 +25,25 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(hasAccess('user'));
+app.use(hasAccess('admin'));
+
 app.listen(process.env.PORT_DEV, () => {
   console.log('Server listening on ' + process.env.PORT_DEV);
 });
+
+// Middleware to grant permissions to roles
+let hasAccess = (accessLevel) => {
+  return (req, res, next) => {
+    if (req.session.user && req.session.user.hasAccess(accessLevel)) {
+      return next();
+    }
+    return res.json({
+      success: false,
+      error: 'Unauthorized'
+    });
+  }
+}
 
 // create user model 
 let userSchema = new mongoose.Schema({
@@ -37,23 +53,14 @@ let userSchema = new mongoose.Schema({
   bio: String
 });
 
-// userSchema.plugin(mongooseRole,{ 
-//   roles: ['user', 'admin'],
-//   accessLevels: {
-//     'user': ['user', 'admin'],
-//     'admin': ['admin']
-//   }
-// });
+userSchema.plugin(mongooseRole,{ 
+  roles: ['user', 'admin'],
+  accessLevels: {
+    'user': ['user', 'admin'],
+    'admin': ['admin']
+  }
+});
 let User = mongoose.model('User', userSchema);
-
-let userData = { 
-  username: 'terunkom',
-  password: '19111986',
-  image: 'http://leadersinheels.com/wp-content/uploads/facebook-default.jpg', //default image
-  bio: 'Im new to NodeBook!',
-  hidden: false,
-  wall: []
-};
 
 // let userData = { 
 //   username: 'terunkom',
@@ -61,24 +68,21 @@ let userData = {
 //   image: 'http://leadersinheels.com/wp-content/uploads/facebook-default.jpg', //default image
 //   bio: 'Im new to NodeBook!',
 //   hidden: false,
-//   wall: [],
-//   role: 'user'
+//   wall: []
 // };
+
+let userData = { 
+  username: 'terunkom',
+  password: '19111986',
+  image: 'http://leadersinheels.com/wp-content/uploads/facebook-default.jpg', //default image
+  bio: 'Im new to NodeBook!',
+  hidden: false,
+  wall: [],
+  role: 'user'
+};
 let myUser = new User(userData);
 
-// let hasAccess = (accessLevel) => {
-//   return (req, res, next) => {
-//     if (req.session.user && req.session.user.hasAccess(accessLevel)) {
-//       return next();
-//     }
-//     return res.json({
-//       success: false,
-//       error: 'Unauthorized'
-//     });
-//   }
-// }
-
-//console.log(myUser.hasAccess('admin'));
+console.log(myUser.hasAccess('admin'));
 let newUser = new User(userData).save(function (err){
   console.log('New user '+ userData.username + ' has been created!');
 });

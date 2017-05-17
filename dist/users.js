@@ -33,7 +33,7 @@ router.get('/register', function (req, res) {
 
 // Home
 router.get('/', function (req, res) {
-  res.render('index');
+  res.render('signup');
 });
 
 // Login

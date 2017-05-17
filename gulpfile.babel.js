@@ -10,7 +10,7 @@ import nodemon from 'gulp-nodemon';
  *gulp task for transpiling ES6 to ES5
  */
 gulp.task('transpile', () => {
-  gulp.src(['models/**.js', 'routes/**.js', 'server.js'])
+  gulp.src(['models/**.js', 'routes/**.js', 'serverone.js'])
   .pipe(babel({
     presets: ['es2015']
   }))
@@ -20,7 +20,7 @@ gulp.task('transpile', () => {
 /**
  *default gulp task that runs whenever gulp is called without specifing a task
  */
-gulp.task('default', ['transpile', 'serve']);
+gulp.task('default', ['transpile', 'serverone']);
 
 /**
  * Gulp task for running tests Specs
@@ -64,9 +64,9 @@ gulp.task('coveralls', ['coverage'], () => {
 /**
  * gulp task to serve the App on localhost
  */
-gulp.task('serve', () =>
+gulp.task('serverone', () =>
   nodemon({
-    script: 'dist/server.js',
+    script: 'dist/serverone.js',
     ext: 'js',
     env: { NODE_ENV: process.env.NODE_ENV }
   })

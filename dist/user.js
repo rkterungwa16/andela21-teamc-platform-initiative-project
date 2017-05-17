@@ -1,55 +1,61 @@
-'use strict';
+"use strict";
 
-var _mongoose = require('mongoose');
+// import mongoose from 'mongoose';
+// import passportLocalMongoose from "passport-local-mongoose";
 
-var _mongoose2 = _interopRequireDefault(_mongoose);
+var mongoose = require('mongoose');
+var passportLocalMongoose = require("passport-local-mongoose");
 
-var _bcryptjs = require('bcryptjs');
-
-var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// User Schema
-var UserSchema = _mongoose2.default.Schema({
-  username: {
-    type: String,
-    index: true
-  },
-  password: {
-    type: String
-  },
-  email: {
-    type: String
-  },
-  name: {
-    type: String
-  }
+var UserSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+  email: String,
+  name: String
 });
 
-var User = module.exports = _mongoose2.default.model('user', UserSchema);
+UserSchema.plugin(passportLocalMongoose);
+module.exports = mongoose.model("User", UserSchema);
 
-module.exports.createUser = function (newUser, callback) {
-  _bcryptjs2.default.genSalt(10, function (err, salt) {
-    _bcryptjs2.default.hash(newUser.password, salt, function (err, hash) {
-      newUser.password = hash;
-      newUser.save(callback);
-    });
-  });
-};
+// // User Schema
+// const UserSchema = mongoose.Schema({
+//   username: {
+//     type: String,
+//     index: true
+//   },
+//   password: {
+//     type: String
+//   },
+//   email: {
+//     type: String
+//   },
+//   name: {
+//     type: String
+//   }
+// });
 
-module.exports.getUserByUsername = function (username, callback) {
-  var query = { username: username };
-  User.findOne(query, callback);
-};
+// const User = module.exports = mongoose.model('user', UserSchema);
 
-module.exports.getUserById = function (id, callback) {
-  User.findById(id, callback);
-};
+// module.exports.createUser = (newUser, callback) => {
+//   bcrypt.genSalt(10, (err, salt) => {
+//     bcrypt.hash(newUser.password, salt, (err, hash) => {
+//       newUser.password = hash;
+//       newUser.save(callback);
+//     });
+//   });
+// };
 
-module.exports.comparePassword = function (candidatePassword, hash, callback) {
-  _bcryptjs2.default.compare(candidatePassword, hash, function (err, isMatch) {
-    // if(err) throw err;
-    callback(null, isMatch);
-  });
-};
+// module.exports.getUserByUsername = (username, callback) => {
+//   const query = { username };
+//   User.findOne(query, callback);
+// };
+
+// module.exports.getUserById = (id, callback) => {
+//   User.findById(id, callback);
+// };
+
+// module.exports.comparePassword = (candidatePassword, hash, callback) => { 
+//   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+//         // if(err) throw err;
+//     callback(null, isMatch);
+//   });
+// };
