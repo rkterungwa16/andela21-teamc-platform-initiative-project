@@ -1,12 +1,14 @@
 import mongoose from 'mongoose';
 
-const opinionSchema = mongoose.Schema({
+const OpinionSchema = mongoose.Schema({
   text: String,
   author: String,
-  // comments: [{
+  upvotes: Array,
+  downvotes: Array
+  // votes: [{
   //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Comment'
+  //   ref: 'Vote'
   // }]
 });
 
-export default mongoose.model('Opinion', opinionSchema);
+export default mongoose.model('Opinion', OpinionSchema);
