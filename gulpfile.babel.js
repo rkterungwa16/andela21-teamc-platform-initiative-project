@@ -20,7 +20,7 @@ gulp.task('transpile', () => {
 /**
  *default gulp task that runs whenever gulp is called without specifing a task
  */
-gulp.task('default', ['transpile']);
+gulp.task('default', ['transpile', 'serve']);
 
 /**
  * Gulp task for running tests Specs

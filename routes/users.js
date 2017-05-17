@@ -14,7 +14,7 @@ router.get('/register', (req, res) => {
 
 // Home
 router.get('/', (req, res) => {
-  res.render('index');
+  res.render('signup');
 });
 
 // Login
