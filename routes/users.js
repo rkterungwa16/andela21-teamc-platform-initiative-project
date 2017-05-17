@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
     res.render('register', { errors
     });
   } else {*/
-  req.checkBody('password2', 'Password do not match').equals(req.body.password);
+  // req.checkBody('password2', 'Password do not match').equals(req.body.password);
   /* const errors = req.validationErrors();
   if (errors) {
     console.log('Error Occurred');

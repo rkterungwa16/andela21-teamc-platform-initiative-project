@@ -1,12 +1,22 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import mongodb from 'mongodb';
+// import expressValidator from 'express -validator';
+import flash from 'connect-flash';
+import passport from 'passport';
+import session from 'express-session';
+// import localStrategy from 'passport-local';
 import mongoose from 'mongoose';
 import methodOverride from 'method-override';
 
 
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://crowdsource:terunkom1986@ds143221.mlab.com:43221/crowdsource');
+const db = mongoose.connection;
+
+// Init App
 const app = express();
 // APP CONFIG
-mongoose.connect('mongodb://localhost/andelainitiative');
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,6 +65,9 @@ app.get('/login', (req, res) => {
 });
 
 // User Dashboard page ROUTE
+// Static files
+app.use(express.static(path.join(process.cwd(), 'public')));
+
 
 app.get('/andelainitiatives/:id', (req, res) => {
   Users.findById(req.params.id, (err, user) => {
@@ -130,6 +143,4 @@ app.delete('/andelainitiative/:id', (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 8080, process.env.IP, () => {
-  console.log('server is running');
-});
+app.listen(app.get('port'));
