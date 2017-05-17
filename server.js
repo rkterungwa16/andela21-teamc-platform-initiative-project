@@ -30,21 +30,21 @@ const UserSchema = new mongoose.Schema({
 const Users = mongoose.model('Users', UserSchema);
 
 // INITIATIVES MONGOOSE/MODEL CONFIG
-const initiativeSchema = new mongoose.Schema({
-  Author: String,
+const InitiativeSchema = new mongoose.Schema({
+  author: String,
   title: String,
   image: { type: String, default: 'http://leadersinheels.com/wp-content/uploads/facebook-default.jpg' },
   body: String,
   created: { type: Date, default: Date.now }
 });
-const Initiatives = mongoose.model('Initiatives', initiativeSchema);
+const Initiative = mongoose.model('Initiative', InitiativeSchema);
 
 // INDEX ROUTES
 app.get('/', (req, res) => {
   res.redirect('/login');
 });
 app.get('/andelainitiative', (req, res) => {
-  Initiatives.find({}, (err, initiatives) => {
+  Initiative.find({}, (err, initiatives) => {
     if (err) {
       console.log('ERROR');
     } else {
