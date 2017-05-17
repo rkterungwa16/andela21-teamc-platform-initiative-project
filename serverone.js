@@ -9,6 +9,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
 const app = express();
+app.use(express.static('public'));
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://crowdsource:terunkom1986@ds143221.mlab.com:43221/crowdsource');

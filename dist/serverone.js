@@ -1,6 +1,6 @@
 'use strict';
 
-var _user = require('../models/user');
+var _user = require('./models/user');
 
 var _user2 = _interopRequireDefault(_user);
 
@@ -55,9 +55,7 @@ passport.serializeUser(_user2.default.serializeUser());
 passport.deserializeUser(_user2.default.deserializeUser());
 
 // BodyParser Middleware
-app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
-app.use((0, _cookieParser2.default)());
 
 app.use(function (req, res, next) {
   res.locals.currentUser = req.user;
@@ -77,13 +75,13 @@ var isLoggedIn = function isLoggedIn(req, res, next) {
 // ======================
 
 // Show register form
-app.get("/", function (req, res) {
+app.get("/register", function (req, res) {
   res.render("signup");
 });
 
 // Sign up logic
 app.post("/register", function (req, res) {
-  var newUser = new _user2.default({ username: req.body.username });
+  var newUser = new _user2.default({ username: req.body.username, name: req.body.name, email: req.body.email });
   _user2.default.register(newUser, req.body.password, function (err, user) {
     if (err) {
       console.log(err);
@@ -112,3 +110,6 @@ app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/andelainitiative");
 });
+
+app.listen(3000);
+console.log('listening');
