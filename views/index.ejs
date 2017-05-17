@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+        <header class="jumbotron">
+            <div class="container">
+            <h1>This is the initiatives page!</h1>
+                <p>View all initiatives!</p>
+                <p>
+                    <a class="btn btn-primary btn-large" href="#">Add new initiative</a>
+                </p>
+            </div>
+        </header>
+
+        <div class="row" style="display:flex; flex-wrap:wrap;">
+            <div class="col-lg-12">
+              <div class="col-lg-3">
+              </div>
+              <div class="col-lg-6">
+              <%initiatives.forEach((initiative) => {%>
+                <br>
+                <div class="row img-thumbnail pull-left">
+                <img src="<%=initiative.image%>" class="img-circle col-lg-4" alt="#">
+                <div class="caption col-lg-8">
+                    <h2><%=initiative.title%></h2>
+                    <h5><%=initiative.description%></h5>
+                </div>
+                </div>
+                <p>
+                <a class="btn btn-primary" href="/andelainitiative/<%=initiative._id%>">More Info</a>
+                </p>
+              <%})%>
+            </div>
+            <div class="col-lg-3">
+            </div>
+            <br>
+        </div>
+    </div>
+</body>
+</html>
