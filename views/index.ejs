@@ -7,21 +7,29 @@
         <div class="row">
           <div class="col-sm-12 col-md-7 pull-left  news-feed">
             <h1 class="text-center">Intitatives</h1>
+            <%if(initiatives){%>
             <%initiatives.forEach((initiative)=>{%>
             <div class="row">
               <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
-
                 <h3>
                   <%=initiative.title%>
                 </h3>
+                <h4>By:<em><%=initiative.author%></em></h4>
                 <div class="col-md-4">
                   <img src="<%=initiative.image%>" class="img-circle col-sm-12 col-md-10 col-md-offset-1" alt="Intiative Image">
                 </div>
-                <%=initiative.description%>
+                <% let description = initiative.description.split(' ');%>
+                <% if(description.length > 50){%>
+                  <% description = description.splice(0, 50).join(' ');%>
+                <%} else{%>
+                  <%description = description.join(' ');%>
+                <%}%>
+                <%=description%>
                  <a class="btn btn-primary btn-sm" href="/show/<%=initiative.id%>">more</a>
               </div>
               </div>
               <%})%>
+              <%}%>
           </div>
           <div class="col-sm-12 col-md-4 pull-right visible-md visible-lg">
             <h1>Recently Added</h1>
