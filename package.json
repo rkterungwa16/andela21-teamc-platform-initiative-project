@@ -4,7 +4,7 @@
   "description": "A learning management system for andela",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --exec babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-babel-istanbul": "^1.6.0",
+    "gulp-babel-minify": "^0.1.12",
     "gulp-coverage": "^0.3.38",
     "gulp-coveralls": "^0.1.4",
     "gulp-exit": "0.0.2",
