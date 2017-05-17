@@ -86,4 +86,3 @@ app.put('/andelainitiative/:id', (req, res) => {
 app.listen(process.env.PORT || 8080, process.env.IP, () => {
   console.log('server is running');
 });
-
