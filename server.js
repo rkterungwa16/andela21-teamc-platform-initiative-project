@@ -31,20 +31,20 @@ const Initiatives = mongoose.model('Initiatives', initiativeSchema);
 
 // INDEX ROUTES
 app.get('/', (req, res) => {
-  res.redirect('/andelainitiative/login');
+  res.redirect('/login');
 });
 app.get('/andelainitiative', (req, res) => {
-  Initiatives.find({}, (err, andelainitiative) => {
+  Initiatives.find({}, (err, initiatives) => {
     if (err) {
       console.log('ERROR');
     } else {
-      return res.render('index', { andelainitiative });
+      return res.render('index', { initiatives });
     }
   });
 });
 
 // User Login Page
-app.get('/andelainitiative/login', (req, res) => {
+app.get('/login', (req, res) => {
   Users.create(req.body.user, (err, foundUsers) => {
     if (err) {
       res.render('login');
