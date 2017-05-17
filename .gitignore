@@ -1,4 +1,7 @@
 node_modules/
 coverage/
 .coverdata/
-
+dist/
+mockdb/
+moc-server.js
+gulpfile.babel.js
