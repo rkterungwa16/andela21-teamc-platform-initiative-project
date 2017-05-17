@@ -34,16 +34,16 @@ passport.deserializeUser(User.deserializeUser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    next();
+  res.locals.currentUser = req.user;
+  next();
 });
 
 // ISLOGGEDIN MIDDLEWARE
 let isLoggedIn = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login")
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login')
 };
 
 // ======================
@@ -51,42 +51,43 @@ let isLoggedIn = (req, res, next) => {
 // ======================
 
 // Show register form
-app.get("/register", (req, res) => {
-    res.render("signup");
+app.get('/register', (req, res) => {
+  res.render('signup');
 });
 
 // Sign up logic
-app.post("/register", (req, res) => {
-  var newUser = new User({username: req.body.username, name: req.body.name, email: req.body.email});
+app.post('/register', (req, res) => {
+  const newUser = new User({
+    username: req.body.username,
+    name: req.body.name, 
+    email: req.body.email
+  });
   User.register(newUser, req.body.password, (err, user) => {
-    if (err){
-      console.log(err);
-      return res.render("register")
+    if (err) {
+      return res.render('register')
     }
-    passport.authenticate("local")(req, res, () => {
-      res.redirect("/andelainitiative");
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/andelainitiative');
     });
   });
 });
 
 // Login Logic
 // Show login form
-app.get("/login", (req, res) => {
-  res.render("login");
+app.get('/login', (req, res) => {
+  res.render('login');
 });
 
 // Add login logic
-app.post("/login", passport.authenticate("local", {
-  successRedirect: "/andelainitiative",
-  failureRedirect: "/login"
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/andelainitiative',
+  failureRedirect: '/login'
 }), (req, res) => {
 });
 
 // Add logout route
-app.get("/logout", (req, res) => {
+app.get('/logout', (req, res) => {
   req.logout();
-  res.redirect("/andelainitiative");
-})
-
+  res.redirect('/andelainitiative');
+});
 app.listen(3000);
-console.log('listening')
