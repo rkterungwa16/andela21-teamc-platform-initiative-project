@@ -8,6 +8,7 @@ import session from 'express-session';
 // import localStrategy from 'passport-local';
 import mongoose from 'mongoose';
 import methodOverride from 'method-override';
+import path from 'path';
 
 
 mongoose.Promise = global.Promise;
