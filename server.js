@@ -144,4 +144,5 @@ app.delete('/andelainitiative/:id', (req, res) => {
   });
 });
 
+console.log(app.get('port'));
 app.listen(app.get('port'));
