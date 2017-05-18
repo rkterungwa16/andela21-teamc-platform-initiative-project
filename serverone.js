@@ -1,4 +1,3 @@
-import User from './models/user';
 import mongoose from 'mongoose';
 import express from 'express';
 import path from 'path';
@@ -7,6 +6,8 @@ import bodyParser from 'body-parser';
 import mongodb from 'mongodb';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+import User from './models/user';
+import Initiative from './models/initiative';
 // const passport = require('passport');
 // const LocalStrategy = require('passport-local');
 
@@ -16,16 +17,23 @@ app.use(express.static(`${process.cwd()}/public`))
 // BodyParser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
+  replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } }; 
+
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://andela-teamc:teamc21@ds143081.mlab.com:43081/andela-dlc');
+mongoose.connect('mongodb://andela-teamc:teamc21@ds143081.mlab.com:43081/andela-dlc', options);
 //mongoose.connect('mongodb://localhost:27017/andelvoice')
+const connection = mongoose.connection;
+connection.on('error', console.error.bind(console, 'connection error:'));
+connection.once('open', () => {
+  console.log('Wait for the connection...');
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -55,6 +63,9 @@ let isLoggedIn = (req, res, next) => {
 // AUTH ROUTES
 // ======================
 
+app.get('/', (req, res) => {
+  res.render('login');
+})
 // Show register form
 app.get("/register", (req, res) => {
     res.render("signup");
@@ -69,8 +80,19 @@ app.post("/register", (req, res) => {
       return res.render("register")
     }
     passport.authenticate("local")(req, res, () => {
+      req.session.user = newUser;
       res.redirect("/andelainitiative");
     });
+  });
+});
+
+app.get('/andelainitiative', (req, res) => {
+  Initiative.find({}, (err, initiatives) => {
+    if (err) {
+      console.log('ERROR');
+    } else {
+      return res.render('index', { initiatives });
+    }
   });
 });
 
