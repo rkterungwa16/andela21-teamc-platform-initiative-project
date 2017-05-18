@@ -1,9 +1,15 @@
+import express from 'express';
+import Initiative from '../models/initiative';
+import Opinion from '../models/opinion';
+
+const router = express.Router();
+
 // =======================
 // OPINION ROUTES
 // =======================
 
 // NEW OPINION
-app.get('/andelainitiative/:id/opinions/new', (req, res) => {
+router.get('/andelainitiative/:id/opinions/new', (req, res) => {
   Initiative.findById(req.params.id, (err, initiative) => {
     if (err) {
       console.log(err);
@@ -15,7 +21,7 @@ app.get('/andelainitiative/:id/opinions/new', (req, res) => {
 
 
 // CREATE OPINION
-app.post('/andelainitiative/:id/opinions', (req, res) => {
+router.post('/andelainitiative/:id/opinions', (req, res) => {
   Initiative.findById(req.params.id, (err, initiative) => {
     if (err) {
       res.redirect('/andelainitiative');
@@ -26,7 +32,7 @@ app.post('/andelainitiative/:id/opinions', (req, res) => {
         } else {
           initiative.opinions.push(opinion);
           initiative.save((err, newInitiative) => {
-            console.log("=================", newInitiative);
+            console.log('=================', newInitiative);
           });
           res.redirect(`/andelainitiative/${initiative._id}`);
         }
@@ -36,7 +42,7 @@ app.post('/andelainitiative/:id/opinions', (req, res) => {
 });
 
 // EDIT OPINION
-app.get('/andelainitiative/:id/opinions/:opinion_id/edit', (req, res) => {
+router.get('/andelainitiative/:id/opinions/:opinion_id/edit', (req, res) => {
   Opinion.findById(req.params.opinion_id, (err, foundOpinion) => {
     if (err) {
       res.redirect('back');
@@ -47,7 +53,7 @@ app.get('/andelainitiative/:id/opinions/:opinion_id/edit', (req, res) => {
 });
 
 // UPDATE OPINION AFTER EDIT
-app.put('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
+router.put('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
   Opinion.findByIdAndUpdate(req.params.opinion_id, req.body.opinion, (err, updatedOpinion) => {
     if (err) {
       res.redirect('back');
@@ -58,7 +64,7 @@ app.put('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
 });
 
 // DELETE OPINION
-app.delete('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
+router.delete('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
   Opinion.findByIdAndRemove(req.params.opinion_id, (err) => {
     if (err) {
       res.redirect('back');
@@ -67,3 +73,5 @@ app.delete('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
     }
   });
 });
+
+export default router;
