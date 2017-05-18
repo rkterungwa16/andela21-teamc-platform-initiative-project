@@ -5,16 +5,31 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import mongodb from 'mongodb';
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
+// const passport = require('passport');
+// const LocalStrategy = require('passport-local');
 
 const app = express();
+app.use(express.static(`${process.cwd()}/public`))
+
+// BodyParser Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://crowdsource:terunkom1986@ds143221.mlab.com:43221/crowdsource');
+mongoose.connect('mongodb://andela-teamc:teamc21@ds143081.mlab.com:43081/andela-dlc');
+//mongoose.connect('mongodb://localhost:27017/andelvoice')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({
@@ -22,15 +37,6 @@ app.use(require("express-session")({
   resave: false,
   saveUninitialized: false
 }));
-
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-// BodyParser Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
@@ -87,5 +93,5 @@ app.get("/logout", (req, res) => {
   res.redirect("/andelainitiative");
 })
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 console.log('listening')
