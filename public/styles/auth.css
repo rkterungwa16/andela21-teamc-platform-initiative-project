@@ -4,7 +4,7 @@ body {
 }
 
 .container-fluid.welcome{
-  height: 100vh;
+  height: inherit;
   background-color: rgba(0,0,0,0.4);
 }
 .navbar-header{
