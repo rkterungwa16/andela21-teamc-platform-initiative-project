@@ -20,10 +20,6 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "connect-flash": "^0.1.1",
-<<<<<<< HEAD
-    "cookie-parser": "^1.4.3",
-=======
->>>>>>> 6950d06128eb1d3fdf235f1a3058043f2258e13c
     "coveralls": "^2.13.0",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
