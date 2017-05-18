@@ -38,8 +38,8 @@
                     </div>
                     <div id="selectors" class="col-md-12">
                         <%=opinion._id%>
-                    <a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="vote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Upvote"></a><span id="upvoted"><%=opinion.upvotes.length%></span>
-                    <a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="vote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Downvote"></a><span><%=opinion.upvotes.length%></span>
+                    <a href="#" class="allVotes"><input type="submit" id="Uvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Upvote"></a><span id="upvoted"><%=opinion.upvotes.length%></span>
+                    <a href="#" class="allVotes"><input type="submit" id="Dvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Downvote"></a><span id="downvoted"><%=opinion.downvotes.length%></span>
                     <a class="btn btn-xs btn-link" href="/andelainitiative/<%=initiative._id%>/opinions/<%=opinion._id%>/edit"> Edit Opinion</a>
                     <form style="display: inline;" action="/andelainitiative/<%=initiative._id%>/opinions/<%=opinion._id%>?_method=DELETE" method="POST">
                     <input type="submit" class="btn btn-xs btn-link" value="Delete Opinion">

@@ -11,13 +11,6 @@ import Vote from './models/voters';
 import seedDB from './seeds';
 
 
-// ROUTES
-
-import initiativeRoutes from './routes/initiatives';
-import opinionRoutes from './routes/opinions';
-import authRoutes from './routes/auth';
-import voteRoutes from './routes/votes';
-
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
@@ -66,10 +59,189 @@ let isLoggedIn = (req, res, next) => {
 };
 
 
+// INDEX ROUTE
+app.get('/andelainitiative', (req, res) => {
+  Initiative.find({}, (err, allInitiatives) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('index', { initiatives: allInitiatives });
+    }
+  });
+});
+
+// SHOW ROUTE
+app.get('/andelainitiative/:id', isLoggedIn, (req, res) => {
+  Initiative.findById(req.params.id).populate('opinions').exec((err, foundInitiative) => {
+  // Initiative.findById(req.params.id, (err, foundInitiative) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('show', { initiative: foundInitiative });
+    }
+  });
+});
+
+// =======================
+// OPINION ROUTES
+// =======================
+
+// NEW OPINION
+app.get('/andelainitiative/:id/opinions/new', (req, res) => {
+  Initiative.findById(req.params.id, (err, initiative) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('opinions/new', { initiative });
+    }
+  });
+});
 
 
+// CREATE OPINION
+app.post('/andelainitiative/:id/opinions', (req, res) => {
+  Initiative.findById(req.params.id, (err, initiative) => {
+    if (err) {
+      res.redirect('/andelainitiative');
+    } else {
+      Opinion.create(req.body.opinion, (err, opinion) => {
+        if (err) {
+          console.log(err);
+        } else {
+          initiative.opinions.push(opinion);
+          initiative.save((err, newInitiative) => {
+            console.log("=================", newInitiative);
+          });
+          res.redirect(`/andelainitiative/${initiative._id}`);
+        }
+      });
+    }
+  });
+});
 
+// EDIT OPINION
+app.get('/andelainitiative/:id/opinions/:opinion_id/edit', (req, res) => {
+  Opinion.findById(req.params.opinion_id, (err, foundOpinion) => {
+    if (err) {
+      res.redirect('back');
+    } else {
+      res.render('opinions/edit', { initiative_id: req.params.id, opinion: foundOpinion });
+    }
+  });
+});
 
+// UPDATE OPINION AFTER EDIT
+app.put('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
+  Opinion.findByIdAndUpdate(req.params.opinion_id, req.body.opinion, (err, updatedOpinion) => {
+    if (err) {
+      res.redirect('back');
+    } else {
+      res.redirect(`/andelainitiative/${req.params.id}`);
+    }
+  });
+});
+
+// DELETE OPINION
+app.delete('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
+  Opinion.findByIdAndRemove(req.params.opinion_id, (err) => {
+    if (err) {
+      res.redirect('back');
+    } else {
+      res.redirect(`/andelainitiative/${req.params.id}`);
+    }
+  });
+});
+
+// ======================
+// AUTH ROUTES
+// ======================
+
+// Show register form
+app.get("/register", (req, res) => {
+    res.render("signup");
+});
+
+// Sign up logic
+app.post("/register", (req, res) => {
+  var newUser = new User({username: req.body.username, fullname: req.body.fullname, email: req.body.email});
+  User.register(newUser, req.body.password, (err, user) => {
+    if (err){
+      console.log(err);
+      return res.render("signup")
+    }
+    passport.authenticate("local")(req, res, () => {
+      res.redirect("/andelainitiative");
+    });
+  });
+});
+
+// Login Logic
+// Show login form
+app.get("/login", (req, res) => {
+  res.render("login", {message: req.flash("error")});
+});
+
+// Add login logic
+app.post("/login", passport.authenticate("local", {
+  successRedirect: "/andelainitiative",
+  failureRedirect: "/login"
+}), (req, res) => {
+});
+
+// Add logout route
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/andelainitiative");
+})
+
+// ===============
+// VOTES
+// ===============
+
+app.get('/andelainitiative/:id/opinions/:opinion_id/upvote', (req, res) => {
+
+  if (req.query.idName == 'Uvote') {
+    Opinion.findById(req.query.id, (err, foundOpinion) => {
+      if (req.user._id in foundOpinion.upvotes && !(req.user._id in foundOpinion.downvotes)) {
+        return
+      }
+      if (req.user._id in foundOpinion.downvotes && !(req.user._id in foundOpinion.upvotes)) {
+        const index = foundOpinion.downvotes.indexOf(req.user._id);
+        console.log(foundOpinion.downvotes)
+        foundOpinion.downvotes.splice(index, 1);
+        foundOpinion.upvotes.push(req.user._id);
+      }
+      if (!(req.user._id in foundOpinion.downvotes) && !(req.user._id in foundOpinion.upvotes)) {
+        foundOpinion.upvotes.push(req.user._id);
+      }
+    foundOpinion.save((err, newOpinion) => {
+      console.log('=====>', newOpinion);
+      res.json({newOpinion, idName: req.query.idName});
+      return
+      });
+    });
+  } else if (req.query.idName == 'Dvote') {
+    Opinion.findById(req.query.id, (err, foundOpinion) => {
+      if (req.user._id in foundOpinion.downvotes && !(req.user._id in foundOpinion.upvotes)) {
+        return
+      }
+      if (req.user._id in foundOpinion.upvotes && !(req.user._id in foundOpinion.downvotes)) {
+        const index = foundOpinion.downvotes.indexOf(req.user._id);
+        console.log('+++++++',index)
+        foundOpinion.upvotes.splice(index, 1);
+        foundOpinion.downvotes.push(req.user._id);
+      }
+      if (!(req.user._id in foundOpinion.upvotes) && !(req.user._id in foundOpinion.downvotes)) {
+        foundOpinion.downvotes.push(req.user._id);
+      }
+    foundOpinion.save((err, newOpinion) => {
+      console.log('====', newOpinion);
+      res.json({newOpinion, idName: req.query.idName});
+      return
+      });
+    });
+  }
+});
 
 
 

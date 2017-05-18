@@ -62,24 +62,21 @@ $(function () {
 $(document).on('click', '.allVotes', (e) => {
   e.preventDefault();
   const button = e.target.id
-  alert(button)
   const id = button.split('-')[1]
-  alert(id)
-  console.log(event.target.nodeName);
-  console.log(id);
+  const idName = button.split('-')[0]
 
   $.ajax({
     type: 'GET',
     url: '/andelainitiative/:id/opinions/:opinion_id/upvote',
-    data: { id: id },
+    data: { id, idName },
     success: (res) => {
       console.log('success -->', res);
-      $('#upvoted').text(res.upvotes.length);
-
+      if (res.newOpinion.idName == 'Uvote') {
+        $('#upvoted').text(res.newOpinion.upvotes.length);
+      } if (res.newOpinion.idName == 'Dvote') {
+        $('#downvoted').text(res.newOpinion.downvotes.length);
+      }
     }
-    // error: () => {
-    //   alert('error loading')
-    // }
   });
 });
 });
