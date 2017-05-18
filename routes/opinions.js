@@ -30,6 +30,9 @@ router.post('/andelainitiative/:id/opinions', (req, res) => {
         if (err) {
           console.log(err);
         } else {
+          opinion.author.id = req.user._id;
+          opinion.author.username = req.user.username;
+          opinion.save();
           initiative.opinions.push(opinion);
           initiative.save((err, newInitiative) => {
             console.log('=================', newInitiative);

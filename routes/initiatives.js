@@ -83,14 +83,21 @@ router.get('/andelainitiative/:id', (req, res) => {
 
 // Edit route
 router.get('/andelainitiative/:id/edit', (req, res) => {
-  Initiative.findById(req.query.id, (err, foundInitiative) => {
-    if (err) {
-      res.redirect('/andelainitiative');
-    } else {
-      res.json({ found: foundInitiative, id: req.query.id });
-      // res.render('edit', { initiative: foundInitiatives });
-    }
-  });
+  if (req.isAuthenticated()) {
+    Initiative.findById(req.query.id, (err, foundInitiative) => {
+      if (err) {
+        res.redirect('/andelainitiative');
+      } else {
+        if (foundInitiative.author.id.equals(req.user._id)) {
+          res.json({ found: foundInitiative, id: req.query.id });
+        } else {
+          res.send('You do not have permission to do that!');
+        }
+      }
+    });
+  } else {
+    res.send('You need to be logged in to do that!');
+  }
 });
 
 // Update Route
