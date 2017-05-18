@@ -1,4 +1,4 @@
-body {
+body.auth-body {
   background-color: mintcream;
   background-image: url('/images/Crowdsourcing.jpg');
 }
