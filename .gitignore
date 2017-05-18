@@ -1,7 +1,18 @@
 node_modules/
 coverage/
 .coverdata/
+<<<<<<< HEAD
 dist/
 mockdb/
 moc-server.js
 gulpfile.babel.js
+=======
+.babelrc
+.eslintrc
+.travis.yml
+gulpfile.babel.js
+package.json
+dist/
+routes/
+testServer.js
+>>>>>>> 71b00b7c6e22785e867d4017ee815096137a7caa
