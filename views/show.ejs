@@ -16,49 +16,34 @@
               <div>
                 <%=initiative.description%>
               </div>
-            <div>
+            <div style="padding-bottom: 15px;">
               <button type="button" id="editInitiative-<%=initiative._id%>" class="btn btn-info btn-xs edit" data-toggle="modal" data-target="#createInitiative">Edit Intiative</button>
               <form style="display: inline;" action="/andelainitiative/<%=initiative._id%>?_method=DELETE" method="POST">
                 <input type="submit" class="btn btn-xs btn-danger" value="Delete Initiative">
               </form>
+              <a class="btn btn-xs btn-success" href="/andelainitiative/<%=initiative._id%>/opinions/new"> Add New Opinion</a>
             </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-10 opinion-form col-md-offset-1">
-            <div id="accordion" class="col-sm-10 col-md-10 col-md-offset-1 col-sm-offset-1 panel-group">
-              <div class="pannel-heading">
-                <h2 class="text-center">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#form">Write an opinion</a>
-                </h2>
-              </div>
-              <form id="form" class="panel-collapse collapse">
-                <div class="form-group">
-                  <label for="heading" class="control-label">Heading</label>
-                  <input class="form-control" id="heading" name="heading">
-                </div>
-                <div class="form-group">
-                  <label for="description" class="control-label">Details</label>
-                  <textarea class="form-control" id="description" name="description" rows="2"></textarea>
-                </div>
-              </form>
               <div class="row opinion-wrapper">
-                <%if(initiative){%>
-                  <% const opinions = initiative.opinions%>
-                  <%opinions.forEach((opinion) => {%>
-                  <div class="vote">
-
-                  </div>
+                  <%initiative.opinions.forEach((opinion) => {%>
                     <div class="col-sm-12 col-md-12 opinion-container">
-                       <h4><%=opinion.author%> Says: <%=opinion.title%></h4>
-                       <p><em><%=opinion.date%></em></p>
-                       <p><%=opinion.description%></p>
+                       <h4><%=opinion.author.username%> Says:</h4>
+                       <p class='text-right'><em><%=opinion.date%></em></p>
+                       <p><%=opinion.text%></p>
+                    <div id="selectors" class="col-md-12">
+                    <a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="Uvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Upvote"></a><span class="upvoted"><%=opinion.upvotes.length%></span>
+                    <a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="Dvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Downvote"></a><span class="downvoted"><%=opinion.downvotes.length%></span>
+                    <a class="btn btn-xs btn-success" href="/andelainitiative/<%=initiative._id%>/opinions/<%=opinion._id%>/edit"> Edit Opinion</a>
+                    <form style="display: inline;" action="/andelainitiative/<%=initiative._id%>/opinions/<%=opinion._id%>?_method=DELETE" method="POST">
+                    <input type="submit" class="btn btn-xs btn-danger" value="Delete Opinion">
+                    </form>
                     </div>
                     <%})%>
-                  <%}%>
             </div>
           </div>
         </div>
       </div>
-      <script src="/js/main.js"></script>
+<!--      <script src="/js/main.js"></script>-->
   </body>
 </html>

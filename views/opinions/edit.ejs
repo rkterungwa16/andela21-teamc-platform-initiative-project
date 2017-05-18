@@ -13,12 +13,9 @@
         <h1 style="text-align:center;">Edit Opinion</h1>
         <div style="width:30%; margin:40px auto;">
             <form action="/andelainitiative/<%=initiative_id%>/opinions/<%=opinion._id%>?_method=PUT" method="POST">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="opinion[author]" value="<%=opinion.author%>">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="opinion[text]" value="<%=opinion.text%>">
-                </div>
+            <div class="form-group">
+            <textarea type="text" name="opinion[text]" class="form-control" rows="6" id="description"><%=opinion.text%></textarea>
+            </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit!</button>
                 </div>
