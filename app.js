@@ -8,7 +8,6 @@ import Initiative from './models/initiative';
 import Opinion from './models/opinion';
 import User from './models/user';
 import Vote from './models/voters';
-import seedDB from './seeds';
 
 
 // ROUTES
@@ -71,17 +70,6 @@ let isLoggedIn = (req, res, next) => {
 };
 
 
+app.listen(process.env.PORT || 3002);
+console.log('Listening');
 
-
-
-
-
-
-
-
-
-
-
-app.listen(3002, () => {
-  console.log('serving on port 3002');
-});
