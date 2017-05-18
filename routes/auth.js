@@ -29,7 +29,6 @@ router.post('/register', (req, res) => {
   });
 });
 
-// Login Logic
 // Show login form
 router.get('/login', (req, res) => {
   res.render('login', { message: req.flash('error') });
@@ -45,7 +44,7 @@ router.post('/login', passport.authenticate('local', {
 // Add logout route
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/andelainitiative');
+  res.redirect('/register');
 });
 
 export default router;

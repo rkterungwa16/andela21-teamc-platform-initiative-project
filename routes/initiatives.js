@@ -19,8 +19,26 @@ const isLoggedIn = (req, res, next) => {
   res.redirect('/login');
 };
 
+const checkOwnership = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    Initiative.findById(req.query.id, (err, foundInitiative) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        if (foundInitiative.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+};
+
 // INDEX ROUTE
-router.get('/andelainitiative', (req, res) => {
+router.get('/andelainitiative', isLoggedIn, (req, res) => {
   Initiative.find({}, (err, allInitiatives) => {
     if (err) {
       console.log(err);
@@ -33,7 +51,6 @@ router.get('/andelainitiative', (req, res) => {
 // SHOW ROUTE
 router.get('/andelainitiative/:id', isLoggedIn, (req, res) => {
   Initiative.findById(req.params.id).populate('opinions').exec((err, foundInitiative) => {
-  // Initiative.findById(req.params.id, (err, foundInitiative) => {
     if (err) {
       console.log(err);
     } else {
@@ -44,13 +61,13 @@ router.get('/andelainitiative/:id', isLoggedIn, (req, res) => {
 
 
 // New Route
-router.get('/andelainitiative/new', (req, res) => {
+router.get('/andelainitiative/new', isLoggedIn, (req, res) => {
   res.render('new');
 });
 
 // Create route
 
-router.post('/andelainitiative', (req, res) => {
+router.post('/andelainitiative', isLoggedIn, (req, res) => {
   const fullname = req.body.fullname;
   const title = req.body.title;
   const image = req.body.image;
@@ -58,7 +75,7 @@ router.post('/andelainitiative', (req, res) => {
   const author = {
     id: req.user._id,
     username: req.user.username
-  }
+  };
   const newInitiative = { fullname, title, image, description, author };
   Initiative.create(newInitiative, (err, newInitiatives) => {
     if (err) {
@@ -71,7 +88,7 @@ router.post('/andelainitiative', (req, res) => {
 
 // Show Item route
 
-router.get('/andelainitiative/:id', (req, res) => {
+router.get('/andelainitiative/:id', isLoggedIn, (req, res) => {
   Initiative.findById(req.params.id, (err, foundInitiatives) => {
     if (err) {
       res.redirect('/andelainitiative');
@@ -82,30 +99,19 @@ router.get('/andelainitiative/:id', (req, res) => {
 });
 
 // Edit route
-router.get('/andelainitiative/:id/edit', (req, res) => {
-  if (req.isAuthenticated()) {
-    Initiative.findById(req.query.id, (err, foundInitiative) => {
-      if (err) {
-        res.redirect('/andelainitiative');
-      } else {
-        if (foundInitiative.author.id.equals(req.user._id)) {
-          res.json({ found: foundInitiative, id: req.query.id });
-        } else {
-          res.send('You do not have permission to do that!');
-        }
-      }
-    });
-  } else {
-    res.send('You need to be logged in to do that!');
-  }
+router.get('/andelainitiative/:id/edit', isLoggedIn, checkOwnership, (req, res) => {
+  Initiative.findById(req.query.id, (err, foundInitiative) => {
+    res.json({ found: foundInitiative, id: req.query.id });
+  });
 });
 
+
 // Update Route
-router.put('/andelainitiative/:id', (req, res) => {
+router.put('/andelainitiative/:id', isLoggedIn, checkOwnership, (req, res) => {
   Initiative.findByIdAndUpdate(req.params.id, req.body
   .initiative, (err, updatedInitiative) => {
     if (err) {
-      res.redirect('/andelainitiative');
+      res.redirect('back');
     } else {
       res.redirect('/andelainitiative/' + req.params.id);
     }
@@ -113,7 +119,7 @@ router.put('/andelainitiative/:id', (req, res) => {
 });
 
 // Delete Route
-router.delete('/andelainitiative/:id', (req, res) => {
+router.delete('/andelainitiative/:id', isLoggedIn, checkOwnership, (req, res) => {
   Initiative.findByIdAndRemove(req.params.id, (err) => {
     if (err) {
       res.redirect('/andelainitiative');
@@ -124,3 +130,4 @@ router.delete('/andelainitiative/:id', (req, res) => {
 });
 
 export default router;
+
