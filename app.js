@@ -35,9 +35,9 @@ app.set('view engine', 'ejs');
 
 seedDB();
 
-//PASSPORT CONFIGURATION
-app.use(require("express-session")({
-  secret: "Anywhere I go",
+// PASSPORT CONFIGURATION
+app.use(require('express-session')({
+  secret: 'Anywhere I go',
   resave: false,
   saveUninitialized: false
 }));
@@ -54,6 +54,12 @@ app.use((req, res, next) => {
 });
 
 
+// ROUTES CONFIG
+app.use(initiativeRoutes);
+app.use(opinionRoutes);
+app.use(voteRoutes);
+app.use(authRoutes);
+
 
 // MiddleWares
 
@@ -61,8 +67,8 @@ let isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  req.flash("error", "Please Login First!");
-  res.redirect("/login")
+  req.flash('error', 'Please Login First!');
+  res.redirect('/login');
 };
 
 
@@ -77,6 +83,6 @@ let isLoggedIn = (req, res, next) => {
 
 
 
-app.listen(3000, () => {
-  console.log('serving on port 3000');
+app.listen(3002, () => {
+  console.log('serving on port 3002');
 });
