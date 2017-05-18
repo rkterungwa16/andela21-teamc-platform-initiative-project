@@ -23,7 +23,7 @@ const LocalStrategy = require('passport-local');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/andela_initiative_comments');
+mongoose.connect('mongodb://localhost/andela_initiatives');
 // mongoose.connect('mongodb://andelainit:andelai@ds143131.mlab.com:43131/andela-initiative')
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/public')));
@@ -67,7 +67,6 @@ let isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  req.flash('error', 'Please Login First!');
   res.redirect('/login');
 };
 
