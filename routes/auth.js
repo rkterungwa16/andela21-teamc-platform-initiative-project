@@ -4,8 +4,6 @@ import User from '../models/user';
 
 const router = express.Router();
 
-
-
 // ======================
 // AUTH ROUTES
 // ======================
@@ -45,7 +43,7 @@ router.post('/login', passport.authenticate('local', {
 // Add logout route
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/andelainitiative');
+  res.redirect('/login');
 });
 
 export default router;

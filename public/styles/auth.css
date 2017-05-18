@@ -14,14 +14,10 @@ body.auth-body {
   position: relative;
   width: 25%;
 }
+
 .navbar {
   height: 7em;
-  background-color: #3258DE;
-  padding: 0 2em;
-}
-.navbar {
-  height: 7em;
-  background-color: #3258DE;
+  background-color: #364156;
   padding: 0 2em;
 }
 
@@ -38,6 +34,10 @@ body.auth-body {
   color:white;
 }
 .navbar-button{
+  list-style-type: none;
+}
+
+.navbar-button {
   list-style-type: none;
 }
 

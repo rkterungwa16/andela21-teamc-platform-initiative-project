@@ -20,7 +20,7 @@ const isLoggedIn = (req, res, next) => {
 };
 
 // INDEX ROUTE
-router.get('/andelainitiative', (req, res) => {
+router.get('/andelainitiative', isLoggedIn, (req, res) => {
   Initiative.find({}, (err, allInitiatives) => {
     if (err) {
       console.log(err);
