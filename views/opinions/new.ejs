@@ -13,12 +13,10 @@
         <h1 style="text-align:center;">Add New Opinion to <%=initiative.title%></h1>
         <div style="width:30%; margin:40px auto;">
             <form action="/andelainitiative/<%=initiative._id%>/opinions" method="POST">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="opinion[author]" placeholder="Add Name">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="opinion[text]" placeholder="Add Opinion">
-                </div>
+            <div class="form-group">
+            <label for="description" class="control-label"></label>
+            <textarea type="text" name="description" class="form-control" rows="6" id="description"></textarea>
+            </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit!</button>
                 </div>

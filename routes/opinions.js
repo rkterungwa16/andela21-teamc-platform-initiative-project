@@ -26,7 +26,7 @@ router.post('/andelainitiative/:id/opinions', (req, res) => {
     if (err) {
       res.redirect('/andelainitiative');
     } else {
-      Opinion.create(req.body.opinion, (err, opinion) => {
+      Opinion.create({ text: req.body.description }, (err, opinion) => {
         if (err) {
           console.log(err);
         } else {
@@ -35,9 +35,8 @@ router.post('/andelainitiative/:id/opinions', (req, res) => {
           opinion.save();
           initiative.opinions.push(opinion);
           initiative.save((err, newInitiative) => {
-            console.log('=================', newInitiative);
           });
-          res.redirect(`/andelainitiative/${initiative._id}`);
+          res.redirect(`/andelainitiative/${ initiative._id }`);
         }
       });
     }
