@@ -7,13 +7,9 @@ import flash from 'connect-flash';
 import session from 'express-session';
 import passport from 'passport';
 // import localStrategy from 'passport-local';
-import mongoose from 'mongoose';
 import users from '../dist/users';
 // import index from '../dist/index';
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1/userDetails');
-const db = mongoose.connection;
 
 
 // Init App
@@ -47,34 +43,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// express validator
-/* app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
-
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
-}));*/
-
-// Connect flash
-app.use(flash());
-
-// Global vars
-app.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
-});
 
 // app.use('/', index);
 app.use('/', users);

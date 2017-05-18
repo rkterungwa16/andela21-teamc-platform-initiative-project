@@ -13,8 +13,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var router = _express2.default.Router();
 
 // Homepage
-router.get('/', function (req, res) {
-  res.render('index');
+router.get('/dashboard', function (req, res) {
+  var initiatives = [{ Author: 'James', title: 'Python is good for AI', Created: '21-4-2017', Body: 'I really enjoy reading python' }, { Author: 'Peter', title: 'Javascript is the king of the web', Created: '20-4-2016', Body: 'Javascript is really a fun language to play allong with' }];
+  // const initiatives = [];
+  res.render('dashboard', { initiatives: initiatives });
 });
 
 exports.default = router;

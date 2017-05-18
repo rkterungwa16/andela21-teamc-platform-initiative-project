@@ -1,4 +1,11 @@
 node_modules/
 coverage/
 .coverdata/
-
+.babelrc
+.eslintrc
+.travis.yml
+gulpfile.babel.js
+package.json
+dist/
+routes/
+testServer.js

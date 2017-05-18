@@ -25,6 +25,9 @@ body {
 .navbar-button a {
   color:white;
 }
+.navbar-button{
+  list-style-type: none;
+}
 
 @media (max-width: 767px){
   .navbar-collapse {
@@ -40,8 +43,7 @@ body {
 
 .navbar .navbar-collapse {
   text-align: center;
-}
-
+} 
 .form-container {
   background-color:#AEECEF;
   padding: 2em;

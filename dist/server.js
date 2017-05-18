@@ -28,10 +28,6 @@ var _passport = require('passport');
 
 var _passport2 = _interopRequireDefault(_passport);
 
-var _mongoose = require('mongoose');
-
-var _mongoose2 = _interopRequireDefault(_mongoose);
-
 var _users = require('../dist/users');
 
 var _users2 = _interopRequireDefault(_users);
@@ -40,17 +36,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import index from '../dist/index';
 
-// import localStrategy from 'passport-local';
-_mongoose2.default.Promise = global.Promise;
-// import expressValidator from 'express -validator';
-
-_mongoose2.default.connect('mongodb://127.0.0.1/userDetails');
-var db = _mongoose2.default.connection;
 
 // Init App
+
+// import expressValidator from 'express -validator';
 var app = (0, _express2.default)();
 
 // Static files
+
+// import localStrategy from 'passport-local';
 app.use(_express2.default.static(_path2.default.join(process.cwd(), 'public')));
 
 // BodyParser Middleware
@@ -73,35 +67,6 @@ app.use((0, _expressSession2.default)({
 // Passport Init
 app.use(_passport2.default.initialize());
 app.use(_passport2.default.session());
-
-// express validator
-/* app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
-
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
-}));*/
-
-// Connect flash
-app.use((0, _connectFlash2.default)());
-
-// Global vars
-app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
-});
 
 // app.use('/', index);
 app.use('/', _users2.default);

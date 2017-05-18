@@ -10,7 +10,7 @@ import nodemon from 'gulp-nodemon';
  *gulp task for transpiling ES6 to ES5
  */
 gulp.task('transpile', () => {
-  gulp.src(['models/**.js', 'routes/**.js', 'server.js'])
+  gulp.src(['models/**.js', 'routes/**.js', 'server.js', 'testServer.js'])
   .pipe(babel({
     presets: ['es2015']
   }))
@@ -66,7 +66,7 @@ gulp.task('coveralls', ['coverage'], () => {
  */
 gulp.task('serve', () =>
   nodemon({
-    script: 'dist/server.js',
+    script: 'dist/testServer.js',
     ext: 'js',
     env: { NODE_ENV: process.env.NODE_ENV }
   })
