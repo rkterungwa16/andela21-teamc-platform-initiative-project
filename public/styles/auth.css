@@ -59,6 +59,7 @@ body {
   background-color:rgba(174, 236, 239, 0.4);
   padding: 2em;
   margin-top: 12.5em;
+  margin-bottom: 5em;
 }
 .btn-link{
   color: white;
@@ -76,4 +77,11 @@ body {
 
 .auth-header h5 {
   margin-bottom: 0;
+}
+
+.andela-logo {
+  position: relative;
+  width: 10%;
+  
+  margin: 0 auto;
 }
