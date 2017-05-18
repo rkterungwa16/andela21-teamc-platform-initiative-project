@@ -99,7 +99,6 @@ app.post('/andelainitiative', (req, res) => {
 });
 
 // Show Item route
-
 app.get('/andelainitiative/:id', (req, res) => {
   Initiatives.findById(req.params.id, (err, foundInitiatives) => {
     if (err) {
@@ -120,7 +119,6 @@ app.get('/andelainitiative/:id/edit', (req, res) => {
     }
   });
 });
-
 // Update Route
 app.put('/andelainitiative/:id', (req, res) => {
   Initiatives.findByIdAndUpdate(req.params.id, req.body

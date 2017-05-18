@@ -1,13 +1,9 @@
 import express from 'express';
-import passport from 'passport';
-import localStrategy from 'passport-local';
-import User from '../dist/user';
 
 const router = express.Router();
 
-const LocalStrategy = localStrategy.Strategy;
-
 // Register
+<<<<<<< HEAD
 router.get('/register', (req, res) => {
   res.render('signup');
 });
@@ -70,30 +66,13 @@ passport.deserializeUser((id, done) => {
   User.getUserById(id, (err, user) => {
     done(err, user);
   });
+=======
+router.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+>>>>>>> 71b00b7c6e22785e867d4017ee815096137a7caa
 });
 
-passport.use(new LocalStrategy(
-  (username, password, done) => {
-    User.getUserByUsername(username, (err, user) => {
-      if (err) throw err;
-      if (!user) {
-        return done(null, false, { message: 'Unknown User' });
-      }
-      User.comparePassword(password, user.password, (err, isMatch) => {
-        if (err) throw err;
-        if (isMatch) {
-          return done(null, user);
-        }
-        return done(null, false, { message: 'Invalid password' });
-      });
-    });
-  }));
 
 
-router.post('/login',
-  passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }),
-  (req, res) => {
-    res.redirect('/');
-  });
 
 export default router;

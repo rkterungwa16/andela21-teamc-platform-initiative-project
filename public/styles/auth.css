@@ -37,6 +37,9 @@ body.auth-body {
 .navbar-button a {
   color:white;
 }
+.navbar-button{
+  list-style-type: none;
+}
 
 @media (max-width: 767px){
   .navbar-collapse {
@@ -52,8 +55,7 @@ body.auth-body {
 
 .navbar .navbar-collapse {
   text-align: center;
-}
-
+} 
 .form-container {
   color: white;
   background-color:rgba(174, 236, 239, 0.4);
