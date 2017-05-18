@@ -33,7 +33,6 @@ mongoose.Promise = require('bluebird');
 
 app.set('view engine', 'ejs');
 
-seedDB();
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
