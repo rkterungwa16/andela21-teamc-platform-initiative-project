@@ -6,24 +6,25 @@ export default class vote {
   * Initializes the class with the specified object
   * @param {object} voteObj
   */
-  constructor(voteObj) {
-    this.voteObj = voteObj;
+  constructor(upvotes, downvotes) {
+    this.upvotes = upvotes;
+    this.downvotes = downvotes;
   }
 
   /**
   * Updates upvotes array in voteObj
   */
   upvote(userId) {
-    var upvotePos = this.voteObj.upvotes.indexOf(userId);
-    var downvotePos = this.voteObj.downvotes.indexOf(userId);
+    const upvotePos = this.upvotes.indexOf(userId);
+    const downvotePos = this.downvotes.indexOf(userId);
 
     if (upvotePos < 0 && downvotePos > -1) {
-      this.voteObj.upvotes.push(userId);
-      this.voteObj.downvotes.splice(downvotePos, 1);
-    }else if (upvotePos < 0 && downvotePos < 0) {
-      this.voteObj.upvotes.push(userId);
-    }else if ( upvotePos > -1 && downvotePos < 0) {
-      this.voteObj.upvotes.splice(upvotePos, 1);
+      this.upvotes.push(userId);
+      this.downvotes.splice(downvotePos, 1);
+    } else if (upvotePos < 0 && downvotePos < 0) {
+      this.upvotes.push(userId);
+    } else if (upvotePos > -1 && downvotePos < 0) {
+      this.upvotes.splice(upvotePos, 1);
     }
   }
 
@@ -31,16 +32,16 @@ export default class vote {
   * Updates downvote array in voteObj
   */
   downvote(userId) {
-    var upvotePos = this.voteObj.upvotes.indexOf(userId);
-    var downvotePos = this.voteObj.downvotes.indexOf(userId);
+    const upvotePos = this.upvotes.indexOf(userId);
+    const downvotePos = this.downvotes.indexOf(userId);
 
     if (downvotePos < 0 && upvotePos > -1) {
-      this.voteObj.downvotes.push(userId);
-      this.voteObj.upvotes.splice(upvotePos, 1);
-    } else if (downvotePos < 0 && upvotesPos < 0) {
-      mobj.downvotes.push(userId);
-    } else if ( downvotesPos > -1 && upvotesPos < 0) {
-      mobj.downvotes.splice(downvotePos, 1);
+      this.downvotes.push(userId);
+      this.upvotes.splice(upvotePos, 1);
+    } else if (downvotePos < 0 && upvotePos < 0) {
+      this.downvotes.push(userId);
+    } else if ( downvotePos > -1 && upvotePos < 0) {
+      this.downvotes.splice(downvotePos, 1);
     }
   }
 }
