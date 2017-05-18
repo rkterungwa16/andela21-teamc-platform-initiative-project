@@ -1,5 +1,11 @@
 body {
   background-color: mintcream;
+  background-image: url('/images/Crowdsourcing.jpg');
+}
+
+.container-fluid.welcome{
+  height: 100vh;
+  background-color: rgba(0,0,0,0.4);
 }
 .navbar-header{
   width:25%;
@@ -13,10 +19,16 @@ body {
   background-color: #3258DE;
   padding: 0 2em;
 }
+.navbar {
+  height: 7em;
+  background-color: #3258DE;
+  padding: 0 2em;
+}
 
 .btn-login {
   margin-top: 2em;
 }
+
 
 .nav.navbar-nav li a {
     color: white;
@@ -43,6 +55,25 @@ body {
 }
 
 .form-container {
-  background-color:#AEECEF;
+  color: white;
+  background-color:rgba(174, 236, 239, 0.4);
   padding: 2em;
+  margin-top: 12.5em;
+}
+.btn-link{
+  color: white;
+}
+
+.auth-header{
+  background-color: rgba(0,0,0, 0.8);
+  color: White;
+  position: fixed;
+  top: 0;
+  width: 95vw;
+  z-index:1;
+  margin-left: 1.5vw;
+}
+
+.auth-header h5 {
+  margin-bottom: 0;
 }
