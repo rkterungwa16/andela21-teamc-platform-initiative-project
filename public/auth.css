@@ -1,0 +1,48 @@
+body {
+  background-color: mintcream;
+}
+.navbar-header{
+  width:25%;
+}
+.img-brand {
+  position: relative;
+  width: 25%;
+}
+.navbar {
+  height: 7em;
+  background-color: #3258DE;
+  padding: 0 2em;
+}
+
+.btn-login {
+  margin-top: 2em;
+}
+
+.nav.navbar-nav li a {
+    color: white;
+}
+
+.navbar-button a {
+  color:white;
+}
+
+@media (max-width: 767px){
+  .navbar-collapse {
+    background-color: rgba(50,88,222,0.5);
+  }
+}
+
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+.navbar .navbar-collapse {
+  text-align: center;
+}
+
+.form-container {
+  background-color:#AEECEF;
+  padding: 2em;
+}

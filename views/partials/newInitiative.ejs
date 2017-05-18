@@ -1,32 +1,28 @@
-<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#createInitiative">Open Modal</button>
+<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#createInitiative">Add New Initiative</button>
 <div id="createInitiative" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+
+        <h4 style="text-align: center;" class="modal-title"><strong><em>We Welcome Your Initiative</em></strong></h4>
       </div>
       <div class="modal-body">
         <form action="/andelainitiative" method="POST">
           <div class="form-group">
-            <label for="author" class="control-label">Author</label>
-            <input type="text" name="intitiative[author]" class="form-control" id="author" placeholder="Enter Author's name">
-          </div>
-          <div class="form-group">
             <label for="title" class="control-label">Title</label>
-            <input type="text" name="intitiative[title]" class="form-control" id="title" placeholder="Enter title">
+            <input type="text" name="title" class="form-control" id="title" placeholder="Enter title">
           </div>
           <div class="form-group">
-            <label for="image" class="control-label" id="image">Image</label>
-            <input type="url" name="intitiative[image]" class="form-control" placeholer="http://domain.com/your_image.png">
+            <label for="image" class="control-label">Image</label>
+            <input type="url" name="image" class="form-control" id="image" placeholer="http://domain.com/your_image.png">
           </div>
           <div class="form-group">
-            <label for="content" class="control-label">Description</label>
-            <textarea type="text" name="intitiative[body]" class="form-control" rows="6" id="content"></textarea>
+            <label for="description" class="control-label">Description</label>
+            <textarea type="text" name="description" class="form-control" rows="6" id="description"></textarea>
           </div>
           <div class="form-group">
-            <label for="submit" class="control-label">Author</label>
-            <button type="submit" class="form-control btn btn-primary" >Submit</button>
+            <button type="submit" class="form-control btn btn-primary">Submit</button>
           </div>
         </form>
       </div>
@@ -34,6 +30,5 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-
   </div>
 </div>
