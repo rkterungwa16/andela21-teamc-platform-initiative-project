@@ -4,7 +4,7 @@
   "description": "A learning management system for andela",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node serverone.js"
+    "start": "gulp serve"
   },
   "repository": {
     "type": "git",
