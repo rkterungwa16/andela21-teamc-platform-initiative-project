@@ -22,11 +22,3 @@ const initiativeSchema = new mongoose.Schema({
 const Initiative = mongoose.model('Initiative', initiativeSchema);
 export default Initiative;
 
-/*
-const InitiativeSchema = new mongoose.Schema({
-  author: String,
-  title: String,
-  image: { type: String, default: 'http://leadersinheels.com/wp-content/uploads/facebook-default.jpg' },
-  body: String,
-  created: { type: Date, default: Date.now }
-}); */
