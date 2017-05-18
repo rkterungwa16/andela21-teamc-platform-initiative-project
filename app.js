@@ -8,7 +8,6 @@ import Initiative from './models/initiative';
 import Opinion from './models/opinion';
 import User from './models/user';
 import Vote from './models/voters';
-import seedDB from './seeds';
 
 
 // ROUTES
@@ -23,8 +22,7 @@ const LocalStrategy = require('passport-local');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/andela_initiatives');
-// mongoose.connect('mongodb://andelainit:andelai@ds143131.mlab.com:43131/andela-initiative')
+mongoose.connect('mongodb://andela-teamc:teamc21@ds143081.mlab.com:43081/andela-dlc');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(methodOverride('_method'));
@@ -71,17 +69,6 @@ let isLoggedIn = (req, res, next) => {
 };
 
 
+app.listen(process.env.PORT || 3002);
+console.log('Listening');
 
-
-
-
-
-
-
-
-
-
-
-app.listen(3002, () => {
-  console.log('serving on port 3002');
-});
