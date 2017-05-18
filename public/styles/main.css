@@ -1,3 +1,8 @@
+body { 
+  background-color: #E0E2DB;
+  font-family: 'Lato', sans-serif;
+
+}
 .img-circle {
   max-height: 10em;
   margin: 0 auto;
@@ -7,8 +12,9 @@
 }
 
 .news-feed .row {
+  background-color: white;
   margin-bottom: 20px;
-  box-shadow: 0 5px 10px 0, 0 11px 21px 0;
+  box-shadow: 0 2px 4px 0, 0 5px 10px 0;
 }
 
 .news-feed .opinion-form {
@@ -19,6 +25,7 @@
   box-shadow: 0 0 0 0;
   padding: 1em;
 }
+
 
 .row.opinion-wrapper .opinion-container {
   border-width: 0 0 1px 0;
@@ -32,4 +39,16 @@
   width: 2em;
   height: 5px;
   background-color: rgba(0,0,0,0.8);
+}
+
+.news-feed h1, h4.author{
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  border-color: #48A9A6;
+}
+
+h4.author{
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  border-color: #48A9A6;
 }
