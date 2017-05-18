@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import expressSanitizer from 'express-sanitizer';
 import mongoose from 'mongoose';
 import methodOverride from 'method-override';
 
@@ -10,12 +11,13 @@ mongoose.connect('mongodb://localhost/andelainitiative');
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressSanitizer());
 app.use(methodOverride('_method'));
 
 // USER MONGOOSE CONFIG
 const UserSchema = new mongoose.Schema({
-  username: String,
-  password: String
+  Username: String,
+  Password: String
 });
 const Users = mongoose.model('Users', UserSchema);
 
@@ -56,12 +58,12 @@ app.get('/andelainitiative/login', (req, res) => {
 
 // User Dashboard page ROUTE
 
-app.get('/andelainitiatives/:id', (req, res) => {
-  Users.findById(req.params.id, (err, user) => {
+app.get('/andelainitiative/dashboard', (req, res) => {
+  Initiatives.find({}, (err, andelainitiative) => {
     if (err) {
       res.redirect('login');
     } else {
-      res.render('dashboard', { user });
+      return res.render('dashboard', { andelainitiative });
     }
   });
 });
@@ -114,7 +116,7 @@ app.put('/andelainitiative/:id', (req, res) => {
     if (err) {
       res.redirect('/andelainitiative');
     } else {
-      res.redirect('/andelainitiative/' + req.params.id);
+      res.redirect(`/andelainitiative/,${req.params.id}`);
     }
   });
 });
@@ -123,13 +125,13 @@ app.put('/andelainitiative/:id', (req, res) => {
 app.delete('/andelainitiative/:id', (req, res) => {
   Initiatives.findByIdAndRemove(req.params.id, (err) => {
     if (err) {
-      res.redirect('/andelainitiative');
+      res.redirect('/andelainitive');
     } else {
       res.redirect('/andelainitiative');
     }
   });
 });
 
-app.listen(process.env.PORT || 8080, process.env.IP, () => {
-  console.log('server is running');
+app.listen(process.env.PORT || 8080, () => {
+  console.log('Server is up and  runnning');
 });
