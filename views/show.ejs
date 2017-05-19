@@ -26,7 +26,10 @@
               </form>
               <%}%>
               <a class="btn btn-xs btn-success" href="/andelainitiative/<%=initiative._id%>/opinions/new"> Add New Opinion</a>
-              <a href="#" class="IVotes"><input type="submit" id="Ivote-<%=initiative._id%>" class="btn btn-xs btn-primary" value="Like this!" class="btn btn-xs btn-primary"></a><span class="Ivoted"><%=initiative.upvotes.length%></span>
+              <a href="#" class="IVotes">
+                <input type="submit" id="Ivote-<%=initiative._id%>" class="btn btn-xs btn-primary" value="Like this!" class="btn btn-xs btn-primary"></a>
+                <span class="glyphicon glyphicon-thumbs-up"
+                <span class="Ivoted"><%=initiative.upvotes.length%></span>
             </div>
             </div>
           </div>

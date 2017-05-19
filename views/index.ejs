@@ -7,7 +7,7 @@
         <%- include partials/about.ejs %>
         <%- include partials/newInitiative.ejs %> 
         <div class="row">
-          <div class="col-sm-12 col-md-7 pull-left  news-feed">
+          <div class="col-sm-12 col-md-8 col-md-offset-2   news-feed">
             <h1 class="text-center" style="color: #70E4EF">INITIATIVES</h1>
             <%if(initiatives){%>
             <%initiatives.reverse().forEach((initiative)=>{%>
@@ -20,9 +20,6 @@
                   <h4 class="cinema"><%=initiative.created.toDateString()%></h4>
                 </h3>
                 <div class="card-text">
-                <div class="col-md-4">
-                  <img src="<%=initiative.image%>" class="img-circle col-sm-12 col-md-10 col-md-offset-1" alt="Intiative Image">
-                </div>
                 <% let description = initiative.description.split(' ');%>
                 <% if(description.length > 20){%>
                   <% description = description.splice(0, 20).join(' ');%>
@@ -38,18 +35,8 @@
               <%})%>
               <%}%>
           </div>
-          <div class="col-sm-12 col-md-4 pull-right visible-md visible-lg">
-            <h1>Recently Added</h1>
-            <%let maxCount = 0; %>
-            <%for(let initiativeIndex = initiatives.length-1; initiativeIndex >= 0; initiativeIndex -= 1){%>
-                  <%if(maxCount > 5) {%>
-                    <%break%>;
-                  <%}%>
-                  <%const initiative = initiatives[initiativeIndex]%>
-                  <a class="btn btn-link" href="/show/<%initiative.id%>"><%=initiative.title%></a>
-                  <%maxCount += 1%>
-            <%}%>
-          </div>
+        
+          </div>-->
         </div>
       </div>
   </body>
