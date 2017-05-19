@@ -15,7 +15,7 @@ const isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  req.flash('error', 'Please Login First!');
+  req.flash('error', 'You need to be logged in to do that!');
   res.redirect('/login');
 };
 
@@ -23,16 +23,19 @@ const checkOwnership = (req, res, next) => {
   if (req.isAuthenticated()) {
     Initiative.findById(req.query.id, (err, foundInitiative) => {
       if (err) {
+        req.flash('error', 'Initiative with this ID Not Found!');
         res.redirect('back');
       } else {
         if (foundInitiative.author.id.equals(req.user._id)) {
           next();
         } else {
+          req.flash('error', "You don't have permission to do that!");
           res.redirect('back');
         }
       }
     });
   } else {
+    req.flash('error', 'You need to be logged in to do that!');
     res.redirect('back');
   }
 };
@@ -97,8 +100,10 @@ router.post('/andelainitiative', isLoggedIn, (req, res) => {
   const newInitiative = { fullname, title, image, description, author };
   Initiative.create(newInitiative, (err, newInitiatives) => {
     if (err) {
+      req.flash('error', 'Something went wrong!');
       res.render('new');
     } else {
+      req.flash('success', 'Successfully added initiative!');
       return res.redirect('/andelainitiative');
     }
   });
@@ -129,8 +134,10 @@ router.put('/andelainitiative/:id', isLoggedIn, checkPostOwnership, (req, res) =
   Initiative.findByIdAndUpdate(req.params.id, req.body
   .initiative, (err, updatedInitiative) => {
     if (err) {
+      req.flash('error', 'Something went wrong!')
       res.redirect('back');
     } else {
+      req.flash('success', 'Updated initiative successfully!');
       res.redirect('/andelainitiative/' + req.params.id);
     }
   });
@@ -142,6 +149,7 @@ router.delete('/andelainitiative/:id', isLoggedIn, checkPostOwnership, (req, res
     if (err) {
       res.redirect('/andelainitiative');
     } else {
+      req.flash('success', 'Initiative deleted successfully!');
       res.redirect('/andelainitiative');
     }
   });

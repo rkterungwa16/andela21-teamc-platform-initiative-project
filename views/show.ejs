@@ -16,6 +16,7 @@
               </div>
               <div>
                 <%=initiative.description%>
+                <span class="cinema"><%=initiative.created.toDateString()%></span>
               </div>
             <div style="padding-bottom: 15px;">
               <%if (currentUser && initiative.author.id.equals(currentUser._id)) {%>
@@ -25,6 +26,7 @@
               </form>
               <%}%>
               <a class="btn btn-xs btn-success" href="/andelainitiative/<%=initiative._id%>/opinions/new"> Add New Opinion</a>
+              <a href="#" class="IVotes"><input type="submit" id="Ivote-<%=initiative._id%>" class="btn btn-xs btn-primary" value="Like this!" class="btn btn-xs btn-primary"></a><span class="Ivoted"><%=initiative.upvotes.length%></span>
             </div>
             </div>
           </div>
@@ -33,7 +35,7 @@
                     <div class="col-sm-12 col-md-12 opinion-container card">
                       <div class="card-title">
                        <h4><%=opinion.author.username%> Says:</h4>
-                       <p class='text-right'><em><%=opinion.date%></em></p>
+                       <p class='text-right'><span class="cinema"><em><%=opinion.created.toDateString()%></em></span></p>
                       </div>
                     <div class="card-text">
                        <p><%=opinion.text%></p>
