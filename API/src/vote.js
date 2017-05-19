@@ -15,15 +15,15 @@ export default class vote {
   * Updates upvotes array in voteObj
   */
   upvote(userId) {
-    const upvotePos = this.upvotes.indexOf(userId);
-    const downvotePos = this.downvotes.indexOf(userId);
+    let upvotePos = this.upvotes.indexOf(userId);
+    var downvotePos = this.downvotes.indexOf(userId);
 
     if (upvotePos < 0 && downvotePos > -1) {
       this.upvotes.push(userId);
       this.downvotes.splice(downvotePos, 1);
-    } else if (upvotePos < 0 && downvotePos < 0) {
+    }else if (upvotePos < 0 && downvotePos < 0) {
       this.upvotes.push(userId);
-    } else if (upvotePos > -1 && downvotePos < 0) {
+    }else if ( upvotePos > -1 && downvotePos < 0) {
       this.upvotes.splice(upvotePos, 1);
     }
   }
@@ -32,8 +32,9 @@ export default class vote {
   * Updates downvote array in voteObj
   */
   downvote(userId) {
-    const upvotePos = this.upvotes.indexOf(userId);
-    const downvotePos = this.downvotes.indexOf(userId);
+
+    let upvotePos = this.upvotes.indexOf(userId);
+    let downvotePos = this.downvotes.indexOf(userId);
 
     if (downvotePos < 0 && upvotePos > -1) {
       this.downvotes.push(userId);
