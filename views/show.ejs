@@ -27,8 +27,9 @@
               <%}%>
               <a class="btn btn-xs btn-success" href="/andelainitiative/<%=initiative._id%>/opinions/new"> Add New Opinion</a>
               <a href="#" class="IVotes">
-                <input type="submit" id="Ivote-<%=initiative._id%>" class="btn btn-xs btn-primary" value="Like this!" class="btn btn-xs btn-primary"></a>
-                <span class="glyphicon glyphicon-thumbs-up"
+                <input type="submit" id="Ivote-<%=initiative._id%>" class="btn btn-xs btn-primary" value="Like this!" class="btn btn-xs btn-primary">
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+              </a>
                 <span class="Ivoted"><%=initiative.upvotes.length%></span>
             </div>
             </div>
@@ -59,6 +60,5 @@
           </div>
         </div>
       </div>
-<!--      <script src="/js/main.js"></script>-->
   </body>
 </html>
