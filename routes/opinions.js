@@ -4,6 +4,34 @@ import Opinion from '../models/opinion';
 
 const router = express.Router();
 
+// MiddleWares
+
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash('error', 'Please Login First!');
+  res.redirect('/login');
+};
+                                                                                                                                                          
+const checkOpinionOwnership = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    Opinion.findById(req.params.opinion_id, (err, foundOpinion) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        if (foundOpinion.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+};
+
 // =======================
 // OPINION ROUTES
 // =======================
@@ -44,7 +72,7 @@ router.post('/andelainitiative/:id/opinions', (req, res) => {
 });
 
 // EDIT OPINION
-router.get('/andelainitiative/:id/opinions/:opinion_id/edit', (req, res) => {
+router.get('/andelainitiative/:id/opinions/:opinion_id/edit', checkOpinionOwnership, (req, res) => {
   Opinion.findById(req.params.opinion_id, (err, foundOpinion) => {
     if (err) {
       res.redirect('back');
