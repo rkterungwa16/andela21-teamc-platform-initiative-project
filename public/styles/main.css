@@ -15,15 +15,18 @@ body {
   background-color: white;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px 0, 0 5px 10px 0;
+  overflow-wrap: break-word;
+  padding-bottom: 1em;
 }
 
 .news-feed .opinion-form {
-  box-shadow: 0 1px 2px 0 lightgray, 0 4px 6px 0 lightgray 
+  box-shadow: 0 1px 2px 0 lightgray, 0 4px 6px 0 lightgray;
 }
 
 .row.opinion-wrapper {
   box-shadow: 0 0 0 0;
   padding: 1em;
+  
 }
 
 
@@ -51,4 +54,8 @@ h4.author{
   border-width: 0 0 2px 0;
   border-style: solid;
   border-color: #48A9A6;
+}
+
+.modal-dialog {
+  background-color: rgba(255,255,255,0.8)
 }

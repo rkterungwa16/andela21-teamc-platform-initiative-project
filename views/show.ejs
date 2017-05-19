@@ -3,6 +3,7 @@
   <body>
     <%- include partials/nav.ejs %>
       <div class="container">
+        <%- include partials/about.ejs %>
       <%- include partials/editInitiative.ejs %> 
         <div class="col-sm-12 col-md-10 col-md-offset-1  news-feed">
           <div class="row">
@@ -11,7 +12,7 @@
                 <%=initiative.title%>
               </h3>
               <div class="col-md-4">
-                <img src="<%=initiative.image%>" class="img-circle col-sm-12 col-md-10 col-md-offset-1" alt="Intiative Image">
+                <img src="<%=initiative.image%>" class="img-rounded col-sm-12 col-md-10 col-md-offset-1" alt="Intiative Image">
               </div>
               <div>
                 <%=initiative.description%>
@@ -34,8 +35,9 @@
                        <p class='text-right'><em><%=opinion.date%></em></p>
                        <p><%=opinion.text%></p>
                     <div id="selectors" class="col-md-12">
-                    <a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="Uvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Like this"></a><span class="upvoted"><%=opinion.upvotes.length%></span>
-                    <!--<a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="Dvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Downvote"></a><span class="downvoted"><%=opinion.downvotes.length%></span>-->
+                    <a href="#" rel="<%=opinion._id%>" class="allVotes">
+                      <input type="submit" id="Uvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="like this">
+                        <span class="glyphicon glyphicon-thumbs-up"</span></a><span class="upvoted"><%=opinion.upvotes.length%></span>
                     <%if(currentUser && opinion.author.id.equals(currentUser._id)) {%>
                     <a class="btn btn-xs btn-success" href="/andelainitiative/<%=initiative._id%>/opinions/<%=opinion._id%>/edit"> Edit Opinion</a>
                     <form style="display: inline;" action="/andelainitiative/<%=initiative._id%>/opinions/<%=opinion._id%>?_method=DELETE" method="POST">
