@@ -23,7 +23,7 @@ router.post('/register', (req, res) => {
       return res.render('signup');
     }
     passport.authenticate('local')(req, res, () => {
-      req.flash('success', 'Welcome to AndelVoice', + currentUser.username);
+      req.flash('success', 'Welcome to AndelVoice');
       res.redirect('/andelainitiative');
     });
   });
