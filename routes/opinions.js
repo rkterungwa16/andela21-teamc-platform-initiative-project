@@ -13,7 +13,7 @@ const isLoggedIn = (req, res, next) => {
   req.flash('error', 'Please Login First!');
   res.redirect('/login');
 };
-                                                                                                                                                          
+
 const checkOpinionOwnership = (req, res, next) => {
   if (req.isAuthenticated()) {
     Opinion.findById(req.params.opinion_id, (err, foundOpinion) => {
@@ -23,11 +23,13 @@ const checkOpinionOwnership = (req, res, next) => {
         if (foundOpinion.author.id.equals(req.user._id)) {
           next();
         } else {
+          req.flash('error', "You don't have permission to do that!");
           res.redirect('back');
         }
       }
     });
   } else {
+    req.flash('error', 'You need to be logged in to do that!');
     res.redirect('back');
   }
 };
@@ -56,7 +58,7 @@ router.post('/andelainitiative/:id/opinions', (req, res) => {
     } else {
       Opinion.create({ text: req.body.description }, (err, opinion) => {
         if (err) {
-          console.log(err);
+          req.flash('error', 'Something went wrong');
         } else {
           opinion.author.id = req.user._id;
           opinion.author.username = req.user.username;
@@ -64,6 +66,7 @@ router.post('/andelainitiative/:id/opinions', (req, res) => {
           initiative.opinions.push(opinion);
           initiative.save((err, newInitiative) => {
           });
+          req.flash('success', 'Successfully added comment')
           res.redirect(`/andelainitiative/${ initiative._id }`);
         }
       });
@@ -99,6 +102,7 @@ router.delete('/andelainitiative/:id/opinions/:opinion_id', (req, res) => {
     if (err) {
       res.redirect('back');
     } else {
+      req.flash('success', 'Comment deleted!');
       res.redirect(`/andelainitiative/${req.params.id}`);
     }
   });
