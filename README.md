@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/rkterungwa16/andela21-teamc-platform-initiative-project.svg?branch=master)](https://travis-ci.org/rkterungwa16/andela21-teamc-platform-initiative-project.svg?branch=master)
+
 # AndelVoice
 
 
@@ -26,10 +29,10 @@
   * passport-local-mongoose
   * method-override
 
-  ### Frontend Dependencies
-  * 
-    * jQuery
-    * Bootstrap
+### Frontend Dependencies
+* Frontend dependencies include:
+   * jQuery
+   * Bootstrap
 
 
 ## Installation and setup
@@ -47,5 +50,3 @@
 * Run the app
   *  `npm start`
 That should start your server. You are ready to go from there
-
-

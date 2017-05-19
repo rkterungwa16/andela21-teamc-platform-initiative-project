@@ -36,7 +36,7 @@ gulp.task('run-test', () => {
  * gulp task for getting coverage report on tests
  */
 gulp.task('coverage', (cb) => {
-  gulp.src(['src/inverted-index.js', 'app.js'])
+  gulp.src(['/API/src/vote.js'])
     .pipe(gulpBabelIstanbul())
     .pipe(injectModules())
     .on('finish', () => {
@@ -60,14 +60,3 @@ gulp.task('coveralls', ['coverage'], () => {
   return gulp.src('./coverage/lcov.info')
     .pipe(coveralls());
 });
-
-/**
- * gulp task to serve the App on localhost
- */
-gulp.task('serverone', () =>
-  nodemon({
-    script: 'dist/serverone.js',
-    ext: 'js',
-    env: { NODE_ENV: process.env.NODE_ENV }
-  })
-);
