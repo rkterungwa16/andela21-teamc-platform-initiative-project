@@ -1,7 +1,10 @@
 # AndelVoice
 
+
+
 ## Introduction
-*  **`AndelVoice`** is an Express Js Powered crowdsourcing web app built for Andela DLC initiatve
+*  **`AndelVoice`** is an Express Js Powered crowdsourcing web app built for Andela DLC initiatve. 
+
 *  It has the following features;
   *  Allows users to;
     *  Sign in or Sign up and logout when signed in
@@ -9,7 +12,7 @@
     *  Get opinions on initiatives(comment)
     *  Approve initiative (in progress)
 
-### Dependencies
+### Backend Dependencies
 *  This app's functionality depends on some Node packages including;
   *  **[Express Js](https://www.djangoproject.com/)** - This framework helps is essential in the creation of  object relational models and it also handles routing on the back end.
   * babel
@@ -22,6 +25,11 @@
   * express-session
   * passport-local-mongoose
   * method-override
+
+  ### Frontend Dependencies
+  * 
+    * jQuery
+    * Bootstrap
 
 
 ## Installation and setup
