@@ -86,3 +86,8 @@ body.auth-body {
   width: 10%;
   margin: 0 auto;
 }
+
+#welcome-message {
+  color: white;
+  margin-left: 750px;
+}

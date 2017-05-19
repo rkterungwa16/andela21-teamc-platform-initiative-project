@@ -37,6 +37,24 @@ const checkOwnership = (req, res, next) => {
   }
 };
 
+const checkPostOwnership = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    Initiative.findById(req.params.id, (err, foundInitiative) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        if (foundInitiative.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+};
+
 // INDEX ROUTE
 router.get('/andelainitiative', isLoggedIn, (req, res) => {
   Initiative.find({}, (err, allInitiatives) => {
@@ -107,7 +125,7 @@ router.get('/andelainitiative/:id/edit', isLoggedIn, checkOwnership, (req, res) 
 
 
 // Update Route
-router.put('/andelainitiative/:id', isLoggedIn, checkOwnership, (req, res) => {
+router.put('/andelainitiative/:id', isLoggedIn, checkPostOwnership, (req, res) => {
   Initiative.findByIdAndUpdate(req.params.id, req.body
   .initiative, (err, updatedInitiative) => {
     if (err) {
@@ -119,7 +137,7 @@ router.put('/andelainitiative/:id', isLoggedIn, checkOwnership, (req, res) => {
 });
 
 // Delete Route
-router.delete('/andelainitiative/:id', isLoggedIn, checkOwnership, (req, res) => {
+router.delete('/andelainitiative/:id', isLoggedIn, checkPostOwnership, (req, res) => {
   Initiative.findByIdAndRemove(req.params.id, (err) => {
     if (err) {
       res.redirect('/andelainitiative');
