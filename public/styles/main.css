@@ -59,3 +59,9 @@ h4.author{
 .modal-dialog {
   background-color: rgba(255,255,255,0.8)
 }
+.card-img-top{
+  max-height: 25em;
+}
+.card-title {
+  background-color: lightgray;
+}

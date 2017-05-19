@@ -30,9 +30,12 @@
           </div>
               <div class="row opinion-wrapper">
                   <%initiative.opinions.forEach((opinion) => {%>
-                    <div class="col-sm-12 col-md-12 opinion-container">
+                    <div class="col-sm-12 col-md-12 opinion-container card">
+                      <div class="card-title">
                        <h4><%=opinion.author.username%> Says:</h4>
                        <p class='text-right'><em><%=opinion.date%></em></p>
+                      </div>
+                    <div class="card-text">
                        <p><%=opinion.text%></p>
                     <div id="selectors" class="col-md-12">
                     <a href="#" rel="<%=opinion._id%>" class="allVotes">
@@ -44,6 +47,7 @@
                     <input type="submit" class="btn btn-xs btn-danger" value="Delete Opinion">
                     </form>
                     <%}%>
+                    </div>
                     </div>
                     </div>
                     <%})%>
