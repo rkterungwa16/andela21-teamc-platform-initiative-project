@@ -4,7 +4,7 @@
 *  **`AndelVoice`** is an Express Js Powered crowdsourcing web app built for Andela DLC initiatve
 *  It has the following features;
   *  Allows users to;
-    *  Sign in or Sign up 
+    *  Sign in or Sign up and logout when signed in
     *  Float initiatives
     *  Get opinions on initiatives(comment)
     *  Approve initiative (in progress)
