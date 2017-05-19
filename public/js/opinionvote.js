@@ -1,5 +1,4 @@
 $(() => { 
-  // Click to like an idea
 $(document).on('click', '.allVotes', (e) => {
   e.preventDefault();
   const button = e.target.id;
@@ -14,9 +13,7 @@ $(document).on('click', '.allVotes', (e) => {
       const votesDisplay = e.target.parentNode.parentNode;
       if (res.idName === 'Uvote') {
         $(votesDisplay).find('.upvoted').text(res.newOpinion.upvotes.length);
-      } if (res.idName === 'Dvote') {
-        $(votesDisplay).find('.downvoted').text(res.newOpinion.downvotes.length);
-      }
+      } 
     }
   });
 });
