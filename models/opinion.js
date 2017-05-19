@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const OpinionSchema = mongoose.Schema({
   text: String,
+  created: { type: Date, default: Date.now },
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -11,7 +12,6 @@ const OpinionSchema = mongoose.Schema({
   },
   upvotes: Array,
   downvotes: Array
-
 });
 
 export default mongoose.model('Opinion', OpinionSchema);
