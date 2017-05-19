@@ -17,10 +17,12 @@
                 <%=initiative.description%>
               </div>
             <div style="padding-bottom: 15px;">
+              <%if (currentUser && initiative.author.id.equals(currentUser._id)) {%>
               <button type="button" id="editInitiative-<%=initiative._id%>" class="btn btn-info btn-xs edit" data-toggle="modal" data-target="#createInitiative">Edit Intiative</button>
               <form style="display: inline;" action="/andelainitiative/<%=initiative._id%>?_method=DELETE" method="POST">
                 <input type="submit" class="btn btn-xs btn-danger" value="Delete Initiative">
               </form>
+              <%}%>
               <a class="btn btn-xs btn-success" href="/andelainitiative/<%=initiative._id%>/opinions/new"> Add New Opinion</a>
             </div>
             </div>
@@ -32,12 +34,14 @@
                        <p class='text-right'><em><%=opinion.date%></em></p>
                        <p><%=opinion.text%></p>
                     <div id="selectors" class="col-md-12">
-                    <a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="Uvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Upvote"></a><span class="upvoted"><%=opinion.upvotes.length%></span>
-                    <a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="Dvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Downvote"></a><span class="downvoted"><%=opinion.downvotes.length%></span>
+                    <a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="Uvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Like this"></a><span class="upvoted"><%=opinion.upvotes.length%></span>
+                    <!--<a href="#" rel="<%=opinion._id%>" class="allVotes"><input type="submit" id="Dvote-<%=opinion._id%>" class="btn btn-xs btn-primary" value="Downvote"></a><span class="downvoted"><%=opinion.downvotes.length%></span>-->
+                    <%if(currentUser && opinion.author.id.equals(currentUser._id)) {%>
                     <a class="btn btn-xs btn-success" href="/andelainitiative/<%=initiative._id%>/opinions/<%=opinion._id%>/edit"> Edit Opinion</a>
                     <form style="display: inline;" action="/andelainitiative/<%=initiative._id%>/opinions/<%=opinion._id%>?_method=DELETE" method="POST">
                     <input type="submit" class="btn btn-xs btn-danger" value="Delete Opinion">
                     </form>
+                    <%}%>
                     </div>
                     </div>
                     <%})%>
